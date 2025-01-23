@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en">
+<head>
+    <!-- meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!--font-family-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+
+    <!-- title of site -->
+    <title>BMW Store</title>
+
+    <!-- For favicon png -->
+    <link rel="shortcut icon" type="image/icon" th:href="@{/image/logo/bmwlogo.jpg}" />
+
+    <!--font-awesome.min.css-->
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+
+    <!--linear icon css-->
+    <link rel="stylesheet" th:href="@{/css/linearicons.css}">
+
+    <!--flaticon.css-->
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+
+    <!--animate.css-->
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+
+    <!--owl.carousel.css-->
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+
+    <!--bootstrap.min.css-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- bootsnav -->
+    <link rel="stylesheet" th:href="@{/css/bootsnav.css}">
+
+    <!--style.css-->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!--responsive.css-->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!--welcome-hero start -->
+<section id="home" class="welcome-hero" th:style="'background: url(/image/welcome-hero/welcome-banner.jpg); background-position: center; background-size: cover;'">
+    <!-- top-area Start -->
+    <div class="top-area">
+        <div class="header-area">
+            <!-- Start Navigation -->
+            <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
+                <div class="container">
+                    <!-- Start Header Navigation -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand" href="#">BMW<span></span></a>
+                    </div><!--/.navbar-header-->
+                    <!-- End Header Navigation -->
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+                        <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                            <li class="scroll active"><a href="#home">Home</a></li>
+                            <li class="scroll"><a href="#featured-cars">Products</a></li>
+                            <li class="scroll"><a href="/products/create">Create Product</a></li>
+                            <li class="scroll"><a href="#contact">Contact</a></li>
+                        </ul><!--/.nav -->
+                    </div><!-- /.navbar-collapse -->
+                </div><!--/.container-->
+            </nav><!--/nav-->
+            <!-- End Navigation -->
+        </div><!--/.header-area-->
+        <div class="clearfix"></div>
+    </div><!-- /.top-area-->
+    <!-- top-area End -->
+
+    <div class="container">
+        <div class="welcome-hero-txt">
+            <h2>Get Your Desired Car at a Reasonable Price</h2>
+            <p>
+                Explore our wide range of cars and find the perfect one for you.
+            </p>
+            <button class="welcome-btn" onclick="window.location.href='#featured-cars'">View Products</button>
+        </div>
+    </div>
+
+    <!--container search-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="model-search-content">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-2 col-sm-12">
+                            <div class="single-model-search">
+                                <h2>Brand</h2>
+                                <div class="model-select-icon">
+                                    <select class="form-control">
+
+                                    </select><!-- /.select-->
+                                </div><!-- /.model-select-icon -->
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1 col-md-2 col-sm-12">
+                            <div class="single-model-search">
+                                <h2>Category</h2>
+                                <div class="model-select-icon">
+                                    <select class="form-control">
+
+                                    </select><!-- /.select-->
+                                </div><!-- /.model-select-icon -->
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1 col-md-2 col-sm-12">
+                            <div class="single-model-search">
+                                <h2>Price</h2>
+                                <div class="model-select-icon">
+                                    <select class="form-control">
+                                    </select><!-- /.select-->
+                                </div><!-- /.model-select-icon -->
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="single-model-search text-center">
+                                <button class="welcome-btn model-search-btn" onclick="window.location.href='#'">
+                                    search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section><!--/.welcome-hero-->
+<!--welcome-hero end -->
+
+<!--service start -->
+<section id="service" class="service">
+    <div class="container">
+        <div class="service-content">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-service-item">
+                        <div class="single-service-icon">
+                            <i class="flaticon-car"></i>
+                        </div>
+                        <h2><a href="#">Online Reservation <span> of</span> car</a></h2>
+                        <p>
+                            Book your car online anytime, anywhere. Fast, easy, and secure reservations for your convenience.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-service-item">
+                        <div class="single-service-icon">
+                            <i class="flaticon-car-repair"></i>
+                        </div>
+                        <h2><a href="#">Customer Service 24/7</a></h2>
+                        <p>
+                            Our support team is available 24/7 to assist you with any inquiries or issues. We're here for you!
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-service-item">
+                        <div class="single-service-icon">
+                            <i class="flaticon-car-1"></i>
+                        </div>
+                        <h2><a href="#">insurence support</a></h2>
+                        <p>
+                            Get comprehensive insurance support for your vehicle. We ensure your peace of mind on the road.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/.container-->
+
+</section><!--/.service-->
+<!--service end-->
+
+
+<!--new-cars start -->
+<section id="new-cars" class="new-cars">
+    <div class="container">
+        <div class="section-header">
+            <p>checkout <span>the</span> latest cars</p>
+            <h2>newest cars</h2>
+        </div><!--/.section-header-->
+        <div class="new-cars-content">
+            <div class="owl-carousel owl-theme" id="new-cars-carousel">
+                <div class="new-cars-item">
+                    <div class="single-new-cars-item">
+                        <div class="row">
+                            <div class="col-md-7 col-sm-12">
+                                <div class="new-cars-img">
+                                    <img th:src="@{/image/bmw-4-series.jpg}" alt="img"/>
+                                </div><!--/.new-cars-img-->
+                            </div>
+                            <div class="col-md-5 col-sm-12">
+                                <div class="new-cars-txt">
+                                    <h2><a href="#">bmw 4-series</a></h2>
+                                    <p>
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </p>
+                                    <p class="new-cars-para2">
+                                        Sed ut pers unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                                    </p>
+                                    <button class="welcome-btn new-cars-btn" onclick="window.location.href='#'">
+                                        view details
+                                    </button>
+                                </div><!--/.new-cars-txt-->
+                            </div><!--/.col-->
+                        </div><!--/.row-->
+                    </div><!--/.single-new-cars-item-->
+                </div><!--/.new-cars-item-->
+                <div class="new-cars-item">
+                    <div class="single-new-cars-item">
+                        <div class="row">
+                            <div class="col-md-7 col-sm-12">
+                                <div class="new-cars-img">
+                                    <img th:src="@{/image/new-cars-model/ncm2.png}" alt="img"/>
+                                </div><!--/.new-cars-img-->
+                            </div>
+                            <div class="col-md-5 col-sm-12">
+                                <div class="new-cars-txt">
+                                    <h2><a href="#">BMW series-3 wagon</a></h2>
+                                    <p>
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </p>
+                                    <p class="new-cars-para2">
+                                        Sed ut pers unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                                    </p>
+                                    <button class="welcome-btn new-cars-btn" onclick="window.location.href='#'">
+                                        view details
+                                    </button>
+                                </div><!--/.new-cars-txt-->
+                            </div><!--/.col-->
+                        </div><!--/.row-->
+                    </div><!--/.single-new-cars-item-->
+                </div><!--/.new-cars-item-->
+                <div class="new-cars-item">
+                    <div class="single-new-cars-item">
+                        <div class="row">
+                            <div class="col-md-7 col-sm-12">
+                                <div class="new-cars-img">
+                                    <img th:src="@{/image/BMW M5.jpg}" alt="img"/>
+                                </div><!--/.new-cars-img-->
+                            </div>
+                            <div class="col-md-5 col-sm-12">
+                                <div class="new-cars-txt">
+                                    <h2><a href="#">BMW M5</a></h2>
+                                    <p>
+                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    </p>
+                                    <p class="new-cars-para2">
+                                        Sed ut pers unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                                    </p>
+                                    <button class="welcome-btn new-cars-btn" onclick="window.location.href='#'">
+                                        view details
+                                    </button>
+                                </div><!--/.new-cars-txt-->
+                            </div><!--/.col-->
+                        </div><!--/.row-->
+                    </div><!--/.single-new-cars-item-->
+                </div><!--/.new-cars-item-->
+            </div><!--/#new-cars-carousel-->
+        </div><!--/.new-cars-content-->
+    </div><!--/.container-->
+
+</section><!--/.new-cars-->
+<!--new-cars end -->
+
+
+<!--featured-cars start -->
+<section id="featured-cars" class="featured-cars">
+    <div class="container">
+        <div class="section-header">
+            <p>Checkout <span>Our</span> Featured Cars</p>
+            <h2>Featured Cars</h2>
+        </div><!--/.section-header-->
+        <div class="featured-cars-content">
+            <div class="row">
+                <!-- Dynamic Product Listings -->
+                <div th:each="product : ${listProducts}" class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{'/image/' + ${product.imageFileName}}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    Model: <span th:text="${product.name}"></span>
+                                    <span class="featured-mi-span" th:text="${product.brand}"></span>
+                                    <span class="featured-hp-span" th:text="${product.category}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#" th:text="${product.name}"></a></h2>
+                            <h3 th:text="${product.price + '$'}"></h3>
+                            <p th:text="${product.description}"></p>
+                            <div class="featured-cars-btn">
+                                <a th:href="@{/products/edit-product(id=${product.id})}" class="btn btn-primary btn-sm">Edit</a>
+                                <a th:href="@{/products/delete(id=${product.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.col-->
+            </div><!--/.row-->
+        </div><!--/.featured-cars-content-->
+    </div><!--/.container-->
+</section><!--/.featured-cars-->
+<!--featured-cars end -->
+
+<!--contact start-->
+<footer id="contact" class="contact">
+    <div class="container">
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-footer-widget">
+                        <div class="footer-logo">
+                            <a href="#">BMW</a>
+                        </div>
+                        <p>
+                            Your one-stop destination for the best cars at the best prices.
+                        </p>
+                        <div class="footer-contact">
+                            <p>info@amine.com</p>
+                            <p>+1 (123) 456-7890</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h2>Quick Links</h2>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#featured-cars">Products</a></li>
+                            <li><a href="/products/create">Create Product</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h2>Newsletter</h2>
+                        <div class="footer-newsletter">
+                            <p>
+                                Subscribe to get the latest updates and offers.
+                            </p>
+                        </div>
+                        <div class="hm-foot-email">
+                            <div class="foot-email-box">
+                                <input type="text" class="form-control" placeholder="Enter Email">
+                            </div><!--/.foot-email-box-->
+                            <div class="foot-email-subscribe">
+                                <span><i class="fa fa-arrow-right"></i></span>
+                            </div><!--/.foot-email-icon-->
+                        </div><!--/.hm-foot-email-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        &copy; 2023 CarVilla. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <div class="footer-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fa fa-behance"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div><!--/.footer-copyright-->
+    </div><!--/.container-->
+</footer><!--/.contact-->
+<!--contact end-->
+
+<!-- Include all js compiled plugins (below), or include individual files as needed -->
+<script th:src="@{/js/jquery.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootsnav.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script th:src="@{/js/custom.js}"></script>
+</body>
+</html>
