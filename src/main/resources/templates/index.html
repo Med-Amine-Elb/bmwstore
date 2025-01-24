@@ -75,7 +75,7 @@
                     <!-- End Header Navigation -->
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+                    <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu" >
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="scroll active"><a href="#home">Home</a></li>
                             <li class="scroll"><a href="#service">service</a></li>
@@ -83,6 +83,12 @@
                             <li class="scroll"><a href="#featured-cars">FEATURED CARS</a></li>
                             <li class="scroll"><a href="#brand">brands</a></li>
                             <li class="scroll"><a href="#contact">Contact</a></li>
+                            <!-- Login and Register Links -->
+                            <li>
+                                <a th:href="@{/login}">
+                                    <i class="fa fa-user"></i>
+                                </a>
+                            </li>
                         </ul><!--/.nav -->
                     </div><!-- /.navbar-collapse -->
                 </div><!--/.container-->
@@ -710,6 +716,7 @@
 
 </footer><!--/.contact-->
 <!--contact end-->
+
 
 <!-- Include all js compiled plugins (below), or include individual files as needed -->
 <script th:src="@{/js/jquery.js}"></script>

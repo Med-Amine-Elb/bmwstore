@@ -1,4 +1,4 @@
-package com.bmw.store.StoreServices;
+package com.bmw.store.Repositories;
 
 import com.bmw.store.models.Product;
 import org.springframework.data.domain.Sort;

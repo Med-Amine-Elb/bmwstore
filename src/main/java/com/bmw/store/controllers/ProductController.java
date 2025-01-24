@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
-import com.bmw.store.StoreServices.ProductRepository;
+import com.bmw.store.Repositories.ProductRepository;
 import com.bmw.store.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.*;
 
