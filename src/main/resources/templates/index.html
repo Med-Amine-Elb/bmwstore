@@ -12,10 +12,10 @@
     <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
 
     <!-- title of site -->
-    <title>BMW Store</title>
+    <title>Next Gear Store</title>
 
     <!-- For favicon png -->
-    <link rel="shortcut icon" type="image/icon" th:href="@{/image/logo/bmwlogo.jpg}" />
+    <link rel="shortcut icon" type="image/icon" th:href="@{/image/logo/nxt.jpg}" />
 
     <!--font-awesome.min.css-->
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
@@ -70,7 +70,7 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="#">BMW<span></span></a>
+                        <a class="navbar-brand" href="#">NXT<span></span></a>
                     </div><!--/.navbar-header-->
                     <!-- End Header Navigation -->
 
@@ -78,8 +78,10 @@
                     <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="scroll active"><a href="#home">Home</a></li>
-                            <li class="scroll"><a href="#featured-cars">Products</a></li>
-                            <li class="scroll"><a href="/products/create">Create Product</a></li>
+                            <li class="scroll"><a href="#service">service</a></li>
+                            <li class="scroll"><a href="#new-cars">NEWEST CARS</a></li>
+                            <li class="scroll"><a href="#featured-cars">FEATURED CARS</a></li>
+                            <li class="scroll"><a href="#brand">brands</a></li>
                             <li class="scroll"><a href="#contact">Contact</a></li>
                         </ul><!--/.nav -->
                     </div><!-- /.navbar-collapse -->
@@ -295,84 +297,381 @@
 <section id="featured-cars" class="featured-cars">
     <div class="container">
         <div class="section-header">
-            <p>Checkout <span>Our</span> Featured Cars</p>
-            <h2>Featured Cars</h2>
+            <p>checkout <span>the</span> featured cars</p>
+            <h2>featured cars</h2>
         </div><!--/.section-header-->
         <div class="featured-cars-content">
             <div class="row">
-                <!-- Dynamic Product Listings -->
-                <div th:each="product : ${listProducts}" class="col-lg-3 col-md-4 col-sm-6">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="single-featured-cars">
                         <div class="featured-img-box">
                             <div class="featured-cars-img">
-                                <img th:src="@{'/image/' + ${product.imageFileName}}" alt="cars">
+                                <img th:src="@{/image/bmw-2-series.jpg}" alt="cars">
                             </div>
                             <div class="featured-model-info">
                                 <p>
-                                    Model: <span th:text="${product.name}"></span>
-                                    <span class="featured-mi-span" th:text="${product.brand}"></span>
-                                    <span class="featured-hp-span" th:text="${product.category}"></span>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
                                 </p>
                             </div>
                         </div>
                         <div class="featured-cars-txt">
-                            <h2><a href="#" th:text="${product.name}"></a></h2>
-                            <h3 th:text="${product.price + '$'}"></h3>
-                            <p th:text="${product.description}"></p>
-                            <div class="featured-cars-btn">
-                                <a th:href="@{/products/edit-product(id=${product.id})}" class="btn btn-primary btn-sm">Edit</a>
-                                <a th:href="@{/products/delete(id=${product.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
-                            </div>
+                            <h2><a href="#">bmw 2-series</a></h2>
+                            <h3>$35,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
                         </div>
                     </div>
-                </div><!--/.col-->
-            </div><!--/.row-->
-        </div><!--/.featured-cars-content-->
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/BMW X6.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">BMW X6 </a></h2>
+                            <h3>$65,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/bmw-i4.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">bmw i4 </a></h2>
+                            <h3>$60,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/BMW 3-Series.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">BMW <span> 3 Series</span> sedan</a></h2>
+                            <h3>$40,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/bmw x4.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">BMW <span>X4 </span></a></h2>
+                            <h3>$55,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/bmw-z-series-z4.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">bmw <span>z-series</span> z4</a></h2>
+                            <h3>$50,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/iX-xDrive.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">BMW <span>iX </span> xDrive</a></h2>
+                            <h3>$75,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-featured-cars">
+                        <div class="featured-img-box">
+                            <div class="featured-cars-img">
+                                <img th:src="@{/image/bmw-6-series.jpg}" alt="cars">
+                            </div>
+                            <div class="featured-model-info">
+                                <p>
+                                    model: 2017
+                                    <span class="featured-mi-span"> 3100 mi</span>
+                                    <span class="featured-hp-span"> 240HP</span>
+                                    automatic
+                                </p>
+                            </div>
+                        </div>
+                        <div class="featured-cars-txt">
+                            <h2><a href="#">BMW <span> series-6</span></a></h2>
+                            <h3>$60,000</h3>
+                            <p>
+                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div><!--/.container-->
+
 </section><!--/.featured-cars-->
 <!--featured-cars end -->
 
+
+<!-- clients-say strat -->
+<section id="clients-say"  class="clients-say">
+    <div class="container">
+        <div class="section-header">
+            <h2>what our clients say</h2>
+        </div><!--/.section-header-->
+        <div class="row">
+            <div class="owl-carousel testimonial-carousel">
+                <div class="col-sm-3 col-xs-12">
+                    <div class="single-testimonial-box">
+                        <div class="testimonial-description">
+                            <div class="testimonial-info">
+                                <div class="testimonial-img">
+                                    <img th:src="@{/image/clients/c1.png}" alt="image of clients person" />
+                                </div><!--/.testimonial-img-->
+                            </div><!--/.testimonial-info-->
+                            <div class="testimonial-comment">
+                                <p>
+                                    Sed ut pers unde omnis iste natus error sit voluptatem accusantium dolor laudan rem aperiam, eaque ipsa quae ab illo inventore verit.
+                                </p>
+                            </div><!--/.testimonial-comment-->
+                            <div class="testimonial-person">
+                                <h2><a href="#">tomas lili</a></h2>
+                                <h4>new york</h4>
+                            </div><!--/.testimonial-person-->
+                        </div><!--/.testimonial-description-->
+                    </div><!--/.single-testimonial-box-->
+                </div><!--/.col-->
+                <div class="col-sm-3 col-xs-12">
+                    <div class="single-testimonial-box">
+                        <div class="testimonial-description">
+                            <div class="testimonial-info">
+                                <div class="testimonial-img">
+                                    <img th:src="@{/image/clients/c2.png}" alt="image of clients person" />
+                                </div><!--/.testimonial-img-->
+                            </div><!--/.testimonial-info-->
+                            <div class="testimonial-comment">
+                                <p>
+                                    Sed ut pers unde omnis iste natus error sit voluptatem accusantium dolor laudan rem aperiam, eaque ipsa quae ab illo inventore verit.
+                                </p>
+                            </div><!--/.testimonial-comment-->
+                            <div class="testimonial-person">
+                                <h2><a href="#">romi rain</a></h2>
+                                <h4>london</h4>
+                            </div><!--/.testimonial-person-->
+                        </div><!--/.testimonial-description-->
+                    </div><!--/.single-testimonial-box-->
+                </div><!--/.col-->
+                <div class="col-sm-3 col-xs-12">
+                    <div class="single-testimonial-box">
+                        <div class="testimonial-description">
+                            <div class="testimonial-info">
+                                <div class="testimonial-img">
+                                    <img th:src="@{/image/clients/c3.png}" alt="image of clients person" />
+                                </div><!--/.testimonial-img-->
+                            </div><!--/.testimonial-info-->
+                            <div class="testimonial-comment">
+                                <p>
+                                    Sed ut pers unde omnis iste natus error sit voluptatem accusantium dolor laudan rem aperiam, eaque ipsa quae ab illo inventore verit.
+                                </p>
+                            </div><!--/.testimonial-comment-->
+                            <div class="testimonial-person">
+                                <h2><a href="#">john doe</a></h2>
+                                <h4>washington</h4>
+                            </div><!--/.testimonial-person-->
+                        </div><!--/.testimonial-description-->
+                    </div><!--/.single-testimonial-box-->
+                </div><!--/.col-->
+            </div><!--/.testimonial-carousel-->
+        </div><!--/.row-->
+    </div><!--/.container-->
+
+</section><!--/.clients-say-->
+<!-- clients-say end -->
+
+
+
+<!--brand strat -->
+<section id="brand"  class="brand">
+    <div class="container">
+        <div class="brand-area">
+            <div class="owl-carousel owl-theme brand-item">
+                <div class="item">
+                    <a href="#">
+                        <img th:src="@{/image/brand/bmw-logo.png}" alt="brand-image" />
+                    </a>
+                </div><!--/.item-->
+                <div class="item">
+                    <a href="#">
+                        <img th:src="@{/image/brand/porsche.png}" alt="brand-image" />
+                    </a>
+                </div><!--/.item-->
+                <div class="item">
+                    <a href="#">
+                        <img th:src="@{/image/brand/br6.png}" alt="brand-image" />
+                    </a>
+                </div><!--/.item-->
+                <div class="item">
+                    <a href="#">
+                        <img th:src="@{/image/brand/audi.png}" alt="brand-image" />
+                    </a>
+                </div><!--/.item-->
+            </div><!--/.owl-carousel-->
+        </div><!--/.clients-area-->
+
+    </div><!--/.container-->
+
+</section><!--/brand-->
+<!--brand end -->
+
+
+
 <!--contact start-->
-<footer id="contact" class="contact">
+<footer id="contact"  class="contact">
     <div class="container">
         <div class="footer-top">
             <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-3 col-sm-6">
                     <div class="single-footer-widget">
                         <div class="footer-logo">
-                            <a href="#">BMW</a>
+                            <a href="#">NXT</a>
                         </div>
                         <p>
-                            Your one-stop destination for the best cars at the best prices.
+                            Ased do eiusm tempor incidi ut labore et dolore magnaian aliqua. Ut enim ad minim veniam.
                         </p>
                         <div class="footer-contact">
-                            <p>info@amine.com</p>
-                            <p>+1 (123) 456-7890</p>
+                            <p>info@themesine.com</p>
+                            <p>+1 (885) 2563154554</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-2 col-sm-6">
                     <div class="single-footer-widget">
-                        <h2>Quick Links</h2>
+                        <h2>about devloon</h2>
                         <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#featured-cars">Products</a></li>
-                            <li><a href="/products/create">Create Product</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="#">about us</a></li>
+                            <li><a href="#">career</a></li>
+                            <li><a href="#">terms <span> of service</span></a></li>
+                            <li><a href="#">privacy policy</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-3 col-xs-12">
                     <div class="single-footer-widget">
-                        <h2>Newsletter</h2>
+                        <h2>top brands</h2>
+                        <div class="row">
+                            <div class="col-md-7 col-xs-6">
+                                <ul>
+                                    <li><a href="#">BMW</a></li>
+                                    <li><a href="#">audi</a></li>
+                                    <li><a href="#">Honda</a></li>
+                                    <li><a href="#">porsche</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-1 col-md-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h2>news letter</h2>
                         <div class="footer-newsletter">
                             <p>
-                                Subscribe to get the latest updates and offers.
+                                Subscribe to get latest news  update and informations
                             </p>
                         </div>
                         <div class="hm-foot-email">
                             <div class="foot-email-box">
-                                <input type="text" class="form-control" placeholder="Enter Email">
+                                <input type="text" class="form-control" placeholder="Add Email">
                             </div><!--/.foot-email-box-->
                             <div class="foot-email-subscribe">
                                 <span><i class="fa fa-arrow-right"></i></span>
@@ -386,8 +685,8 @@
             <div class="row">
                 <div class="col-sm-6">
                     <p>
-                        &copy; 2023 CarVilla. All rights reserved.
-                    </p>
+                        &copy; copyright.designed and developed by <a href="https://www.themesine.com/">themesine</a>.
+                    </p><!--/p-->
                 </div>
                 <div class="col-sm-6">
                     <div class="footer-social">
@@ -401,6 +700,14 @@
             </div>
         </div><!--/.footer-copyright-->
     </div><!--/.container-->
+
+    <div id="scroll-Top">
+        <div class="return-to-top">
+            <i class="fa fa-angle-up " id="scroll-top-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+        </div>
+
+    </div><!--/.scroll-Top-->
+
 </footer><!--/.contact-->
 <!--contact end-->
 

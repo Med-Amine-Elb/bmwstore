@@ -1,0 +1,206 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff; /* White background */
+    min-height: 100vh;
+    color: #333; /* Default text color */
+}
+
+/* Navigation */
+.nav {
+    background-color: black; /* Black navigation bar */
+    padding: 1rem 0;
+    color: white;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+    }
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: #4e4ffa; /* Light gray for hover */
+}
+
+/* Header */
+.header {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #333; /* Dark text */
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .header h1 {
+        font-size: 3rem;
+    }
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-primary {
+    background-color: black; /* Black button */
+    color: white; /* White text */
+}
+
+.btn-primary:hover {
+    background-color: #333; /* Dark gray on hover */
+}
+
+.btn-outline {
+    border: 1px solid #e5e7eb; /* Light gray border */
+    background-color: transparent;
+    color: #333; /* Dark text */
+}
+
+.btn-outline:hover {
+    background-color: #f8f9fa; /* Light gray background on hover */
+    border-color: #333; /* Dark gray border on hover */
+}
+
+.btn-danger {
+    background-color: #ef4444; /* Red for danger actions */
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626; /* Darker red on hover */
+}
+
+/* Card */
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin: 3rem 0;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+/* Table */
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+}
+
+.table th {
+    font-weight: 600;
+    border-bottom: 2px solid #e5e7eb; /* Light gray border for headers */
+    color: #333; /* Dark text for headers */
+}
+
+.table tr {
+    border-bottom: 1px solid #e5e7eb; /* Light gray border for rows */
+}
+
+.table tr:hover {
+    background-color: #f8f9fa; /* Light gray background on hover */
+}
+
+.table img {
+    width: 120px; /* Adjust the size */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensures the image fits within the box */
+    border-radius: 5px; /* Add rounded corners for a modern look */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for aesthetics */
+    display: block; /* Ensure images are centered */
+    margin: auto; /* Center the image horizontally in the cell */
+}
+
+/* Action buttons */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Scroll to top button */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: black; /* Black background */
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    display: none;
+    transition: background-color 0.2s;
+}
+
+.scroll-top:hover {
+    background-color: #333; /* Dark gray on hover */
+}
+
+.scroll-top.visible {
+    display: flex;
+}
