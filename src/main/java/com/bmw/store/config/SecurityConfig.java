@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,23 +17,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home", "/register", "/login", "/css/**", "/js/**", "/image/**","/products" ,"/fonts/**","/products/create","/products/save").permitAll() // Allow access to public resources
-                        .anyRequest().authenticated() // Require authentication for all other requests
+                        .anyRequest().permitAll() // Allow access to all endpoints without authentication
                 )
-                .formLogin(form -> form
-                        .loginPage("/login") // Specify the login page
-                        .defaultSuccessUrl("/home") // Redirect to home page after successful login
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login") // Redirect to login page after logout
-                        .permitAll()
-                );
+                .csrf(AbstractHttpConfigurer::disable); // Disable CSRF protection if not needed
+
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Use BCrypt for password hashing
+        return new BCryptPasswordEncoder();
     }
 }
