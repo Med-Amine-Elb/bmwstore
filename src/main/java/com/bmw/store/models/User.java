@@ -9,13 +9,15 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String username;
+    private String firstName;
+
+    private String lastName;
 
     @Column(unique = true)
     private String email;
@@ -33,6 +35,8 @@ public class User {
     private String profilePicture;
 
     private String phoneNumber;
+
+    private String address;
 
     // Getters and Setters
 }

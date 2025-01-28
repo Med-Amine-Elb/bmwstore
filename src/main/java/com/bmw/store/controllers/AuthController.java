@@ -21,17 +21,20 @@ public class AuthController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "login-page/register"; // Render the registration form
+        return "login-page/login"; // Utilisez la même page pour le login et l'inscription
     }
 
     @PostMapping("/register")
-    public String registerUser(User user) {
+    public String registerUser(User user, Model model) {
         userService.registerUser(user);
-        return "redirect:/login"; // Redirect to the login page after registration
+        model.addAttribute("successMessage", "User registered successfully!");
+        return "login-page/login"; // Redirige vers la même page avec un message de succès
     }
 
     @GetMapping("/login")
-    public String showLoginForm() {
-        return "login-page/login"; // Render the login form
+    public String showLoginPage(Model model) {
+        model.addAttribute("user", new User()); // Replace 'User' with your user class
+        return "login-page/login";
     }
+
 }
