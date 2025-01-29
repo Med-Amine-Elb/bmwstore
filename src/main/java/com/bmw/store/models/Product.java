@@ -26,7 +26,22 @@ public class Product {
     @Column(name = "image_file_name")
     private String imageFileName;
 
+    @Column(name = "model_year")
+    private Integer modelYear; // Use Integer (wrapper)
+
+    @Column(name = "mileage")
+    private String mileage; // String is fine, can be null
+
+    @Column(name = "horsepower")
+    private String horsepower; // String is fine, can be null
+
+    @Column(name = "automatic")
+    private Boolean automatic; // Use Boolean (wrapper)
+
+    @Column(name = "featured")
+    private Boolean featured; // Use Boolean (wrapper)
+
     @Column(name = "status", nullable = false)
-    private boolean status = true; // Par défaut, le statut est true
+    private boolean status = true; // Primitive is okay here, has a default
 
 }

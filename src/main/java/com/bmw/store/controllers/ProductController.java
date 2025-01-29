@@ -3,6 +3,7 @@ package com.bmw.store.controllers;
 import com.bmw.store.Repositories.UserRepository;
 import com.bmw.store.models.ProductDto;
 import com.bmw.store.models.User;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
@@ -32,6 +33,8 @@ import java.util.List;
 
 public class ProductController {
 
+    String uploadDir = "src/public/image/";
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -49,16 +52,33 @@ public class ProductController {
 
     @GetMapping("index")
     public String index(Model model, Principal principal) {
-        if (principal != null) { // Check if the user is logged in (principal is not null)
+        List<Product> featuredProducts = productRepository.findFeaturedProductsRandomly();
+
+        if (featuredProducts.isEmpty()) {
+            featuredProducts = productRepository.findByStatusTrue(Sort.by(Sort.Direction.DESC, "id"));
+        }
+
+        List<Product> limitedProducts = featuredProducts.subList(0, Math.min(8, featuredProducts.size()));
+
+        System.out.println("Number of featured products: " + featuredProducts.size());
+        System.out.println("Number of limited products: " + limitedProducts.size());
+
+        if (limitedProducts.isEmpty()) {
+            System.out.println("listProducts is EMPTY!");
+        }
+
+        model.addAttribute("listProducts", limitedProducts); // This is the crucial line!
+
+        if (principal != null) {
             String email = principal.getName();
             User user = userRepository.findByemail(email).orElse(null);
-
             if (user != null) {
                 model.addAttribute("firstName", user.getFirstName());
                 model.addAttribute("lastName", user.getLastName());
             }
         }
-        return "index"; // Returns the name of your home page view (index.html)
+        return "index";
+
     }
 
     @GetMapping("*/create")
@@ -163,6 +183,14 @@ public class ProductController {
         product.setStatus(false);
         productRepository.save(product);
         return "redirect:/products";
+    }
+    @GetMapping("/car-details")
+    public String showCarDetails(@RequestParam Long id, Model model) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found")); // Handle product not found
+
+        model.addAttribute("product", product); // Add the product to the model
+        return "products/car-details"; // Return the name of your details template
     }
 
 }

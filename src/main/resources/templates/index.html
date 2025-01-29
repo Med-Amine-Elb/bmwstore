@@ -306,210 +306,30 @@
 
 <!--featured-cars start -->
 <section id="featured-cars" class="featured-cars">
-    <div class="container">
-        <div class="section-header">
-            <p>checkout <span>the</span> featured cars</p>
-            <h2>featured cars</h2>
-        </div><!--/.section-header-->
-        <div class="featured-cars-content">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/bmw-2-series.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">bmw 2-series</a></h2>
-                            <h3>$35,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
+        <div class="container">  <div class="row">  <div class="col-lg-3 col-md-4 col-sm-6" th:each="product : ${listProducts}">
+            <div class="single-featured-cars">
+                <div class="featured-img-box">
+                    <div class="featured-cars-img">
+                        <img th:src="@{/image/{filename}(filename=${product.imageFileName})}" th:alt="${product.name}">
+                    </div>
+                    <div class="featured-model-info">
+                        <p>
+                            Model: <span th:text="${product.modelYear != null ? product.modelYear : ''}"></span> <br/>
+                            Mileage: <span th:text="${product.mileage != null ? product.mileage : ''}"></span> <br/>
+                            HP: <span th:text="${product.horsepower != null ? product.horsepower : ''}"></span> <br/>
+                            Automatic: <span th:text="${product.automatic != null ? (product.automatic ? 'Yes' : 'No') : ''}"></span> <br/>
+                        </p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/BMW X6.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">BMW X6 </a></h2>
-                            <h3>$65,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/bmw-i4.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">bmw i4 </a></h2>
-                            <h3>$60,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/BMW 3-Series.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">BMW <span> 3 Series</span> sedan</a></h2>
-                            <h3>$40,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/bmw x4.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">BMW <span>X4 </span></a></h2>
-                            <h3>$55,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/bmw-z-series-z4.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">bmw <span>z-series</span> z4</a></h2>
-                            <h3>$50,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/iX-xDrive.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">BMW <span>iX </span> xDrive</a></h2>
-                            <h3>$75,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="single-featured-cars">
-                        <div class="featured-img-box">
-                            <div class="featured-cars-img">
-                                <img th:src="@{/image/bmw-6-series.jpg}" alt="cars">
-                            </div>
-                            <div class="featured-model-info">
-                                <p>
-                                    model: 2017
-                                    <span class="featured-mi-span"> 3100 mi</span>
-                                    <span class="featured-hp-span"> 240HP</span>
-                                    automatic
-                                </p>
-                            </div>
-                        </div>
-                        <div class="featured-cars-txt">
-                            <h2><a href="#">BMW <span> series-6</span></a></h2>
-                            <h3>$60,000</h3>
-                            <p>
-                                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                            </p>
-                        </div>
-                    </div>
+                <div class="featured-cars-txt">
+                    <h2><a th:href="@{/car-details(id=${product.id})}" th:text="${product.name}"></a></h2>
+                    <h3><span th:text="${product.price}"></span></h3>
                 </div>
             </div>
         </div>
-    </div><!--/.container-->
+        </div>
+
+        </div>
 
 </section><!--/.featured-cars-->
 <!--featured-cars end -->

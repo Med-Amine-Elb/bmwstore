@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${product.name}"></title>
+</head>
+<body>
+
+<h1><span th:text="${product.name}"></span></h1>
+<img th:src="@{/image/}+${product.imageFileName}" alt="Car Image">
+
+<p>Brand: <span th:text="${product.brand}"></span></p>
+<p>Model Year: <span th:text="${product.modelYear}"></span></p>
+<p>Mileage: <span th:text="${product.mileage}"></span></p>
+<p>Horsepower: <span th:text="${product.horsepower}"></span></p>
+<span th:text="${product.automatic != null ? (product.automatic ? 'Automatic' : 'Manual') : ''}"></span>
+<p>Price: <span th:text="${product.price}"></span></p>
+<p>Description: <span th:text="${product.description}"></span></p>
+
+<a th:href="@{/products}">Back to Products</a> </body>
+</html>
