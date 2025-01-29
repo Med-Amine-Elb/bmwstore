@@ -1,6 +1,8 @@
 package com.bmw.store.controllers;
 
+import com.bmw.store.Repositories.UserRepository;
 import com.bmw.store.models.ProductDto;
+import com.bmw.store.models.User;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
@@ -21,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.*;
 
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +35,9 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private UserRepository userRepository; // This is crucial
+
 
 
     @GetMapping({"","/products"})
@@ -42,8 +48,17 @@ public class ProductController {
     }
 
     @GetMapping("index")
-    public String index(Model model) {
-        return "index";
+    public String index(Model model, Principal principal) {
+        if (principal != null) { // Check if the user is logged in (principal is not null)
+            String email = principal.getName();
+            User user = userRepository.findByemail(email).orElse(null);
+
+            if (user != null) {
+                model.addAttribute("firstName", user.getFirstName());
+                model.addAttribute("lastName", user.getLastName());
+            }
+        }
+        return "index"; // Returns the name of your home page view (index.html)
     }
 
     @GetMapping("*/create")
@@ -140,7 +155,7 @@ public class ProductController {
             System.out.println("Exception: " + ex.getMessage());
             return "redirect:/products";
         }
-      }
+    }
 
     @GetMapping("/products/delete")
     public String deleteProduct(@RequestParam Long id) {

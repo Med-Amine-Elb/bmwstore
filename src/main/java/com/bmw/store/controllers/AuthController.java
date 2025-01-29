@@ -29,6 +29,7 @@ public class AuthController {
     public String registerUser(@ModelAttribute("user") User user,
                                BindingResult result,
                                RedirectAttributes redirectAttributes) {
+        user.setRole("VISITOR"); // Set the default role here
         try {
             userService.registerUser(user);
             redirectAttributes.addFlashAttribute("successMessage",

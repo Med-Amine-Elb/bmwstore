@@ -316,9 +316,19 @@
 
     <!-- Sign In Form -->
     <div class="form-container sign-in-container">
+        <div th:if="${param.error}" class="alert alert-danger">
+            Invalid username or password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out.
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span th:text="${successMessage}"></span>
+        </div>
+        <!-- Sign In Form -->
         <form id="loginForm" action="/login" method="POST">
             <h1>Sign in</h1>
-            <input type="email" id="loginEmail" name="email" placeholder="Email" required />
+            <input type="email" id="loginEmail" name="username" placeholder="Email" required />
             <input type="password" id="loginPassword" name="password" placeholder="Password" required />
             <a href="#">Forgot your password?</a>
             <button type="submit">Sign In</button>
