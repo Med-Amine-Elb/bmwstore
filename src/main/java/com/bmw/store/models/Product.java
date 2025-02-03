@@ -38,8 +38,29 @@ public class Product {
     @Column(name = "automatic")
     private Boolean automatic; // Use Boolean (wrapper)
 
+    @Column(name = "engines") // Keep the case consistent with the CSV
+    private String engines;
+
+    @Column(name = "cc_battery_capacity")
+    private String ccBatteryCapacity; // Use camelCase
+
+    @Column(name = "total_speed")
+    private String totalSpeed; // Use camelCase
+
+    @Column(name = "performance")
+    private String performance;
+
+    @Column(name = "fuel_types") // Keep the case consistent with the CSV
+    private String fuelTypes;  // Use camelCase
+
+    @Column(name = "seats")
+    private String seats;
+
+    @Column(name = "torque")
+    private String torque;
+
     @Column(name = "featured")
-    private Boolean featured; // Use Boolean (wrapper)
+    private Boolean featured = true; // Use Boolean (wrapper)
 
     @Column(name = "status", nullable = false)
     private boolean status = true; // Primitive is okay here, has a default

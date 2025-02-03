@@ -305,33 +305,39 @@
 
 
 <!--featured-cars start -->
+<!-- featured-cars.html -->
 <section id="featured-cars" class="featured-cars">
-        <div class="container">  <div class="row">  <div class="col-lg-3 col-md-4 col-sm-6" th:each="product : ${listProducts}">
-            <div class="single-featured-cars">
-                <div class="featured-img-box">
-                    <div class="featured-cars-img">
-                        <img th:src="@{/image/{filename}(filename=${product.imageFileName})}" th:alt="${product.name}">
+    <div class="container">
+        <div class="row">
+            <!-- Iterate over products -->
+            <div class="col-lg-3 col-md-4 col-sm-6" th:each="product : ${listProducts}">
+                <!-- Wrap the card with an anchor tag for clickable functionality -->
+                <a th:href="@{'/products/' + ${product.id}}" class="product-card">
+                    <div class="card">
+                        <div class="card-image">
+                            <img th:src="@{/image/{filename}(filename=${product.imageFileName})}"
+                                 th:alt="${product.name}" />
+                        </div>
+                        <div class="card-content">
+                            <h2 th:text="${product.name}"></h2>
+                            <p class="price" th:text="${product.price}"></p>
+                            <ul class="product-details">
+                                <li>Model: <span th:text="${product.modelYear != null ? product.modelYear : 'N/A'}"></span></li>
+                                <li>Mileage: <span th:text="${product.mileage != null ? product.mileage : 'N/A'}"></span></li>
+                                <li>HP: <span th:text="${product.horsepower != null ? product.horsepower : 'N/A'}"></span></li>
+                                <li>
+                                    Automatic:
+                                    <span th:text="${product.automatic != null ? (product.automatic ? 'Yes' : 'No') : 'N/A'}"></span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="featured-model-info">
-                        <p>
-                            Model: <span th:text="${product.modelYear != null ? product.modelYear : ''}"></span> <br/>
-                            Mileage: <span th:text="${product.mileage != null ? product.mileage : ''}"></span> <br/>
-                            HP: <span th:text="${product.horsepower != null ? product.horsepower : ''}"></span> <br/>
-                            Automatic: <span th:text="${product.automatic != null ? (product.automatic ? 'Yes' : 'No') : ''}"></span> <br/>
-                        </p>
-                    </div>
-                </div>
-                <div class="featured-cars-txt">
-                    <h2><a th:href="@{/car-details(id=${product.id})}" th:text="${product.name}"></a></h2>
-                    <h3><span th:text="${product.price}"></span></h3>
-                </div>
+                </a>
             </div>
         </div>
-        </div>
-
-        </div>
-
-</section><!--/.featured-cars-->
+    </div>
+</section>
+<!--/.featured-cars-->
 <!--featured-cars end -->
 
 
