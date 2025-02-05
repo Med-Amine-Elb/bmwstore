@@ -310,6 +310,7 @@
         <div class="row">
             <!-- Using Bootstrap's grid system for 3 cards per row -->
             <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${listProducts}">
+                <a th:href="@{/products/details/{name}(name=${product.name})}" style="text-decoration: none; color: inherit;">
                 <div class="product-card">
                     <div class="card-image">
                         <img th:src="@{/image/{filename}(filename=${product.imageFileName})}"
@@ -344,7 +345,7 @@
                         </div>
                     </div>
                     <!-- Clickable overlay link directing to car details page -->
-                    <a th:href="@{/car-details/{id}(id=${product.id})}" class="card-link">View Details</a>
+                    <!-- a th:href="@{/car-details/{id}(id=${product.id})}" class="card-link">View Details</a-->
                 </div>
             </div>
         </div>

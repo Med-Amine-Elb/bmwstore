@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+//import java.lang.ScopedValue;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -22,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Find top 8 featured products by ID
     List<Product> findTop8ByFeaturedTrueAndStatusTrueOrderByIdDesc();
+
+    Optional<Product> findByName(String name);
 }

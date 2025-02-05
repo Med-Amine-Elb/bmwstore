@@ -186,16 +186,11 @@ public class ProductController {
         productRepository.save(product);
         return "redirect:/products";
     }
-    @GetMapping("/car-details/{id}") // Or @RequestMapping, etc.
-    public String carDetails(@PathVariable Long id, Model model) {
-        Product product = productService.getProductById(id); // Get car details
-
-        if (product == null) {
-            // Handle the case where the product is not found.
-            return "error/product-not-found"; // Or redirect, or throw an exception
-        }
-
-        model.addAttribute("product", product); // Add car data to the model
-        return "car-details"; // The name of your Thymeleaf template (no .html)
+    @GetMapping("/products/details/{name}")
+    public String showProductDetails(@PathVariable String name, Model model) {
+        Product product = productRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        model.addAttribute("product", product);
+        return "products/details_product";
     }
+
 }
