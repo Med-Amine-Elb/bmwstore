@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByStatusTrue(Sort sort);
 
     // Find 8 random featured products (for MySQL)
-    @Query(nativeQuery = true, value = "SELECT * FROM products WHERE featured = TRUE AND status = TRUE ORDER BY RAND() LIMIT 8")
+    @Query(nativeQuery = true, value = "SELECT * FROM products WHERE featured = TRUE AND status = TRUE ORDER BY RAND() LIMIT 6")
     List<Product> findFeaturedProductsRandomly();
 
     // Find all featured products

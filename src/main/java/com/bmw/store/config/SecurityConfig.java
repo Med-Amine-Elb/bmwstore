@@ -19,9 +19,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/image/**", "/register", "/login","/fonts/**").permitAll()
-                        .requestMatchers("/products/create", "/products/save", "/image/**", "/products/edit-product", "/products/delete").hasRole("ADMIN")
+                /*.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**", "/image/**", "/register", "/login","/fonts/**","/car-details/**").permitAll()
+                        .requestMatchers("/products/create", "/products/save", "/image/**", "/products/edit-product", "/products/delete","/products/car-details").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -32,6 +32,9 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/index") // Redirect to home page after logout
                         .permitAll()
+                )*/
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").permitAll() // Allow all requests
                 )
                 .csrf(csrf -> csrf.disable());
 

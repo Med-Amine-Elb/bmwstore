@@ -81,7 +81,7 @@
                             <li class="scroll active"><a href="#home">Home</a></li>
                             <li class="scroll"><a href="#service">service</a></li>
                             <li class="scroll"><a href="#new-cars">NEWEST CARS</a></li>
-                            <li class="scroll"><a href="#featured-cars">FEATURED CARS</a></li>
+                            <li class="scroll"><a href="#ban">FEATURED CARS</a></li>
                             <li class="scroll"><a href="#brand">brands</a></li>
                             <li class="scroll"><a href="#contact">Contact</a></li>
                             <!-- Login and Register Links -->
@@ -211,9 +211,8 @@
 </section><!--/.service-->
 <!--service end-->
 
-
 <!--new-cars start -->
-<section id="new-cars" class="new-cars">
+<section class="new-cars" id="new-cars" >
     <div class="container">
         <div class="section-header">
             <p>checkout <span>the</span> latest cars</p>
@@ -306,37 +305,52 @@
 
 <!--featured-cars start -->
 <!-- featured-cars.html -->
-<section id="featured-cars" class="featured-cars">
+<section class="ban" id="ban">
     <div class="container">
         <div class="row">
-            <!-- Iterate over products -->
-            <div class="col-lg-3 col-md-4 col-sm-6" th:each="product : ${listProducts}">
-                <!-- Wrap the card with an anchor tag for clickable functionality -->
-                <a th:href="@{'/products/' + ${product.id}}" class="product-card">
-                    <div class="card">
-                        <div class="card-image">
-                            <img th:src="@{/image/{filename}(filename=${product.imageFileName})}"
-                                 th:alt="${product.name}" />
+            <!-- Using Bootstrap's grid system for 3 cards per row -->
+            <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${listProducts}">
+                <div class="product-card">
+                    <div class="card-image">
+                        <img th:src="@{/image/{filename}(filename=${product.imageFileName})}"
+                             th:alt="${product.name}" />
+                    </div>
+                    <div class="card-content">
+                        <h2 class="car-title" th:text="${product.brand + ' ' + product.name}"></h2>
+                        <p class="car-subtitle" th:text="${product.category}"></p>
+
+                        <div class="tags-container">
+                            <span class="tag" th:if="${product.automatic}">Automatisch</span>
+                            <span class="tag" th:if="${product.fuelTypes == 'Benzine'}">Benzine</span>
                         </div>
-                        <div class="card-content">
-                            <h2 th:text="${product.name}"></h2>
-                            <p class="price" th:text="${product.price}"></p>
-                            <ul class="product-details">
-                                <li>Model: <span th:text="${product.modelYear != null ? product.modelYear : 'N/A'}"></span></li>
-                                <li>Mileage: <span th:text="${product.mileage != null ? product.mileage : 'N/A'}"></span></li>
-                                <li>HP: <span th:text="${product.horsepower != null ? product.horsepower : 'N/A'}"></span></li>
-                                <li>
-                                    Automatic:
-                                    <span th:text="${product.automatic != null ? (product.automatic ? 'Yes' : 'No') : 'N/A'}"></span>
-                                </li>
-                            </ul>
+
+                        <div class="specs-grid">
+                            <div>Model: <span th:text="${product.modelYear}"></span></div>
+                            <div>Mileage: <span th:text="${product.mileage}"></span></div>
+                            <div>HP: <span th:text="${product.horsepower}"></span></div>
+                            <div>Speed: <span th:text="${product.totalSpeed}"></span></div>
+                        </div>
+
+                        <div class="price-section">
+                            <div>
+                                <div class="price">€ <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"></span></div>
+                                <div class="price-details">Per maand excl. BTW</div>
+                            </div>
+                            <button class="favorite-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                </a>
+                    <!-- Clickable overlay link directing to car details page -->
+                    <a th:href="@{/car-details/{id}(id=${product.id})}" class="card-link">View Details</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
 <!--/.featured-cars-->
 <!--featured-cars end -->
 
@@ -550,6 +564,19 @@
 
 
 <!-- Include all js compiled plugins (below), or include individual files as needed -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Handle favorite button clicks
+        const favoriteButtons = document.querySelectorAll(".favorite-btn")
+
+        favoriteButtons.forEach((button) => {
+            button.addEventListener("click", function (e) {
+                e.preventDefault() // Prevent card link click
+                this.classList.toggle("active")
+            })
+        })
+    })
+</script>
 <script th:src="@{/js/jquery.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>

@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import com.bmw.store.Repositories.ProductRepository;
 import com.bmw.store.models.Product;
@@ -14,12 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.server.ResponseStatusException;
+import com.bmw.store.services.ProductService;
 import java.nio.file.Files;
 import java.nio.file.*;
 
@@ -37,6 +36,9 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ProductService productService; // Ensure this is an instance, not static
 
     @Autowired
     private UserRepository userRepository; // This is crucial
@@ -184,13 +186,16 @@ public class ProductController {
         productRepository.save(product);
         return "redirect:/products";
     }
-    @GetMapping("/car-details")
-    public String showCarDetails(@RequestParam Long id, Model model) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found")); // Handle product not found
+    @GetMapping("/car-details/{id}") // Or @RequestMapping, etc.
+    public String carDetails(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id); // Get car details
 
-        model.addAttribute("product", product); // Add the product to the model
-        return "products/car-details"; // Return the name of your details template
+        if (product == null) {
+            // Handle the case where the product is not found.
+            return "error/product-not-found"; // Or redirect, or throw an exception
+        }
+
+        model.addAttribute("product", product); // Add car data to the model
+        return "car-details"; // The name of your Thymeleaf template (no .html)
     }
-
 }

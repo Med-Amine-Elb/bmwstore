@@ -1,20 +1,227 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${product.name}"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${product.name + ' - Details'}">Car Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .car-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        .specs-table td {
+            padding: 12px;
+        }
+        .specs-label {
+            font-weight: 600;
+            color: #666;
+        }
+        .suggested-car-img {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .price-tag {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
+<!-- Include the existing navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
 
-<h1><span th:text="${product.name}"></span></h1>
-<img th:src="@{/image/}+${product.imageFileName}" alt="Car Image">
+<div class="container my-5">
+    <!-- Main Car Details Section -->
+    <div class="row">
+        <!-- Left Column - Images -->
+        <div class="col-lg-7">
+            <img th:if="${product.imageFileName}"
+                 th:src="@{'/image/' + ${product.imageFileName}}"
+                 class="car-image mb-4"
+                 th:alt="${product.name}">
 
-<p>Brand: <span th:text="${product.brand}"></span></p>
-<p>Model Year: <span th:text="${product.modelYear}"></span></p>
-<p>Mileage: <span th:text="${product.mileage}"></span></p>
-<p>Horsepower: <span th:text="${product.horsepower}"></span></p>
-<span th:text="${product.automatic != null ? (product.automatic ? 'Automatic' : 'Manual') : ''}"></span>
-<p>Price: <span th:text="${product.price}"></span></p>
-<p>Description: <span th:text="${product.description}"></span></p>
+            <!-- Additional Images Gallery -->
+            <div class="row g-3">
+                <div class="col-4">
+                    <img th:src="@{'/image/' + ${product.imageFileName}}" class="img-fluid rounded" alt="Interior">
+                </div>
+                <!-- Add placeholder images for gallery -->
+                <div class="col-4" th:each="i : ${#numbers.sequence(1, 2)}">
+                    <img src="/placeholder.svg" class="img-fluid rounded" alt="Car view">
+                </div>
+            </div>
+        </div>
 
-<a th:href="@{/products}">Back to Products</a> </body>
+        <!-- Right Column - Details -->
+        <div class="col-lg-5">
+            <h1 class="mb-3" th:text="${product.name}">Car Name</h1>
+            <div class="d-flex align-items-center mb-4">
+                <div class="me-3">
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                </div>
+                <span class="text-muted">(5.0 average rating)</span>
+            </div>
+
+            <div class="price-tag mb-4">
+                <span th:text="${'$' + #numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$50,000</span>
+            </div>
+
+            <!-- Specifications Table -->
+            <table class="table specs-table">
+                <tbody>
+                <tr>
+                    <td class="specs-label">Brand</td>
+                    <td th:text="${product.brand}">Brand</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Category</td>
+                    <td th:text="${product.category}">Category</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Model Year</td>
+                    <td th:text="${product.modelYear}">2024</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Mileage</td>
+                    <td th:text="${product.mileage}">10,000 km</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Horsepower</td>
+                    <td th:text="${product.horsepower}">400 HP</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Total Speed</td>
+                    <td th:text="${product.totalSpeed}">250 km/h</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Fuel Type</td>
+                    <td th:text="${product.fuelTypes}">Gasoline</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Seats</td>
+                    <td th:text="${product.seats}">5</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Torque</td>
+                    <td th:text="${product.torque}">500 Nm</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg">Contact Seller</button>
+                <button class="btn btn-outline-primary btn-lg">Add to Wishlist</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Description</h3>
+            <p class="lead" th:text="${product.description}">Car description here...</p>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Features</h3>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span th:text="${product.automatic ? 'Automatic Transmission' : 'Manual Transmission'}">
+                                Transmission Type
+                            </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span th:text="${'Engine: ' + product.engines}">Engine Details</span>
+                    </div>
+                </div>
+                <!-- Add more features as needed -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Similar Cars Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Similar Cars</h3>
+            <div class="row g-4">
+                <!-- Similar cars will be populated dynamically -->
+                <div class="col-md-4" th:each="similarProduct : ${@productRepository.findByBrandAndIdNot(product.brand, product.id)}">
+                    <a th:href="@{/car-details(id=${similarProduct.id})}" class="text-decoration-none">
+                        <div class="card h-100">
+                            <img th:src="@{'/image/' + ${similarProduct.imageFileName}}"
+                                 class="card-img-top suggested-car-img"
+                                 th:alt="${similarProduct.name}">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${similarProduct.name}">Similar Car</h5>
+                                <p class="card-text" th:text="${'$' + #numbers.formatDecimal(similarProduct.price, 0, 'COMMA', 2, 'POINT')}">$45,000</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p>Email: info@cardealer.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">About Us</a></li>
+                    <li><a href="#" class="text-light">Terms of Service</a></li>
+                    <li><a href="#" class="text-light">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

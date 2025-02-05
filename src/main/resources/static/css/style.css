@@ -17,7 +17,7 @@ font-family: 'Rufina', serif;
 4.  Model-search
 5.  Service
 6.  New-cars
-7.  Featured-cars
+7.  ban
 8.  Client-say
 9.  Brand
 10. Blog
@@ -229,10 +229,10 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 45px;
-    margin-left: 20px;
+    margin-left: 7%;
 }
 .welcome-hero-txt p {
-    margin-left: 20px;
+    margin-left: 20%;
     font-size: 18px;
     text-transform: initial;
     color: #fff;
@@ -408,114 +408,149 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 /*.owl-dots */
 
 /*-------------------------------------
-        7. Featured-cars
+/*-------------------------------------
+        7. ban
 --------------------------------------*/
-.featured-cars{
-    padding:112px 0 120px;
-}
-.featured-cars-content{padding-top:96px;}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-/*.single-featured-cars*/
-/* Container for product cards */
-.product-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px; /* Add some padding around the container */
+.ban {
+    padding: 40px 0;
+    background-color: #f8f9fa;
+    font-family: "Inter", sans-serif;
 }
 
-/* Card styling */
-.product-card {
-    width: 300px; /* Adjust as needed */
-    border-radius: 10px;
+.ban .product-card {
+    background: white;
+    border-radius: 20px;
     overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%; /* Ensure cards take up equal height */
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 30px;
+    height: 100%;
+    position: relative;  /* Added to contain the absolute overlay */
 }
 
-/* Hover effect: Smooth scaling without affecting layout */
-.product-card:hover {
-    transform: scale(1.05); /* Scales up slightly */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.ban .product-card:hover {
+    transform: scale(1.05);  /* Smooth scale hover effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-/* Link to make the whole card clickable */
-.product-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    flex: 1 1 auto; /* Allow the link area to expand */
-}
-
-/* Image container */
-.card-image {
-    width: 100%;
-    height: 200px; /* Ensures consistent image area */
-    overflow: hidden; /* Prevents overflowing */
-    flex-shrink: 0; /* Prevent shrinking */
-}
-
-/* Image styling: Ensures proper fit */
-.card-image img {
+/* New: Full-card clickable overlay */
+.ban .card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    display: block;
-    object-fit: cover; /* Use 'contain' if you want to see the full image */
+    z-index: 10;
+    text-indent: -9999px; /* Hides any link text */
+    transition: background-color 0.2s ease;
+}
+.ban .card-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Content styling */
-.card-content {
-    padding: 15px;
-    flex-grow: 1; /* Ensures content takes remaining space */
+.ban .card-image {
+    position: relative;
+    width: 100%;
+    padding-top: 66.67%; /* 2:3 aspect ratio */
+    background-color: #fff;
+}
+
+.ban .card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  /* Retained as "contain" per your request */
+    padding: 16px;
+}
+
+.ban .card-content {
+    padding: 24px;
+}
+
+.ban .car-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.ban .car-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.ban .tags-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
-/* Title */
-.card-content h2 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-    flex-grow: 1; /* Allows title to take available space */
+.ban .tag {
+    background-color: #f0f2f5;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    color: #4a4a4a;
+    font-weight: 500;
 }
 
-/* Price styling */
-.card-content .price {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #2a9d8f;
-    flex-shrink: 0; /* Prevent shrinking */
+.ban .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
 }
 
-/* Product details */
-.product-details {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 0.9rem;
-    flex-shrink: 0; /* Prevent shrinking */
+.ban .price-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f2f5;
 }
 
-.product-details li {
-    margin-bottom: 5px;
+.ban .price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .product-card {
-        width: 90%; /* Cards take up most of the screen width */
-    }
-
-    .card-image {
-        height: 150px; /* Adjust image height for smaller screens */
-    }
+.ban .price-details {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
 }
 
-/*.single-featured-cars*/
+.ban .favorite-btn {
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.ban .favorite-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #ff4d4d;
+    stroke-width: 2;
+}
+
+.ban .favorite-btn.active svg {
+    fill: #ff4d4d;
+}
+
+/*.single-ban*/
+
 
 /*-------------------------------------       
         8. Clients-say 
@@ -793,7 +828,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 
 /* Target the <li> containing the dropdown */
 .navbar-right li.dropdown {
-    margin-left: 20px; /* Adjust as needed for spacing */
+    margin-left: -20px; /* Adjust as needed for spacing */
 }
 
 /* Style the dropdown toggle (name) */
