@@ -308,45 +308,43 @@
 <section class="ban" id="ban">
     <div class="container">
         <div class="row">
-            <!-- Using Bootstrap's grid system for 3 cards per row -->
             <div class="col-lg-4 col-md-6 mb-4" th:each="product : ${listProducts}">
                 <a th:href="@{/products/details/{name}(name=${product.name})}" style="text-decoration: none; color: inherit;">
-                <div class="product-card">
-                    <div class="card-image">
-                        <img th:src="@{/image/{filename}(filename=${product.imageFileName})}"
-                             th:alt="${product.name}" />
-                    </div>
-                    <div class="card-content">
-                        <h2 class="car-title" th:text="${product.brand + ' ' + product.name}"></h2>
-                        <p class="car-subtitle" th:text="${product.category}"></p>
-
-                        <div class="tags-container">
-                            <span class="tag" th:if="${product.automatic}">Automatisch</span>
-                            <span class="tag" th:if="${product.fuelTypes == 'Benzine'}">Benzine</span>
+                    <div class="product-card">
+                        <div class="card-image">
+                            <img th:src="@{/image/{filename}(filename=${product.imageFileName})}"
+                                 th:alt="${product.name}" />
                         </div>
+                        <div class="card-content">
+                            <h2 class="car-title" th:text="${product.brand + ' ' + product.name}"></h2>
+                            <p class="car-subtitle" th:text="${product.category}"></p>
 
-                        <div class="specs-grid">
-                            <div>Model: <span th:text="${product.modelYear}"></span></div>
-                            <div>Mileage: <span th:text="${product.mileage}"></span></div>
-                            <div>HP: <span th:text="${product.horsepower}"></span></div>
-                            <div>Speed: <span th:text="${product.totalSpeed}"></span></div>
-                        </div>
-
-                        <div class="price-section">
-                            <div>
-                                <div class="price">€ <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"></span></div>
-                                <div class="price-details">Per maand excl. BTW</div>
+                            <div class="tags-container">
+                                <span class="tag" th:if="${product.automatic}">Automatisch</span>
+                                <span class="tag" th:if="${product.fuelTypes == 'Benzine'}">Benzine</span>
                             </div>
-                            <button class="favorite-btn">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                </svg>
-                            </button>
+
+                            <div class="specs-grid">
+                                <div>Model: <span th:text="${product.modelYear}"></span></div>
+                                <div>Mileage: <span th:text="${product.mileage}"></span></div>
+                                <div>HP: <span th:text="${product.horsepower}"></span></div>
+                                <div>Speed: <span th:text="${product.totalSpeed}"></span></div>
+                            </div>
+
+                            <div class="price-section">
+                                <div>
+                                    <div class="price">€ <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"></span></div>
+                                    <div class="price-details">Per maand excl. BTW</div>
+                                </div>
+                                <button class="favorite-btn">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <!-- Clickable overlay link directing to car details page -->
-                    <!-- a th:href="@{/car-details/{id}(id=${product.id})}" class="card-link">View Details</a-->
-                </div>
+                </a>
             </div>
         </div>
     </div>

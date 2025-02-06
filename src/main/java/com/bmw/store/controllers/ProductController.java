@@ -5,9 +5,11 @@ import com.bmw.store.models.ProductDto;
 import com.bmw.store.models.User;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import com.bmw.store.Repositories.ProductRepository;
 import com.bmw.store.models.Product;
@@ -193,4 +195,22 @@ public class ProductController {
         return "products/details_product";
     }
 
+    @GetMapping("/car/{id}")
+    public String getCarDetails(@PathVariable Long id, Model model) {
+        Product product = productService.getProductById(id); // Get the product
+
+        if (product == null) {
+            model.addAttribute("errorMessage", "Product not found."); // Error message
+            List<Product> featuredProducts = productService.getFeaturedProducts();
+            model.addAttribute("featuredProducts", featuredProducts);
+            return "/products/details_product"; // Return to the template even if product is null
+        }
+
+        model.addAttribute("product", product); // Add the product to the model!
+        List<Product> featuredProducts = productService.getFeaturedProducts();
+        model.addAttribute("featuredProducts", featuredProducts);
+
+
+        return "/products/details_product";
+    }
 }

@@ -26,4 +26,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findTop8ByFeaturedTrueAndStatusTrueOrderByIdDesc();
 
     Optional<Product> findByName(String name);
+
+    Optional<Product> findById(Long id); // Or Optional<Product> findById(Long id); if you want to handle nulls explicitly
+
+    List<Product> findByFeaturedTrue(); // To get featured cars
+
 }
