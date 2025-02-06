@@ -1,0 +1,66 @@
+<form th:action="@{/shop}" method="get">
+    <input type="text" name="search" th:value="${searchTerm}" placeholder="Search products...">
+    <button type="submit">Search</button>
+
+    <select name="sortBy">
+        <option value="">Sort By</option>
+        <option value="price" th:selected="${sortBy == 'price'}">Price</option>
+        <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+    </select>
+
+    <select name="sortDirection">
+        <option value="asc" th:selected="${sortDirection == 'asc'}">Ascending</option>
+        <option value="desc" th:selected="${sortDirection == 'desc'}">Descending</option>
+    </select>
+
+    <button type="submit">Apply Sorting</button>
+
+    <button type="button" onclick="window.location.href='/shop'">Clear Filters</button>  </form>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>
+            <a th:href="@{/shop(search=${searchTerm}, sortBy='name', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Name</a>
+        </th>
+        <th>
+            <a th:href="@{/shop(search=${searchTerm}, sortBy='brand', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Brand</a>
+        </th>
+        <th>
+            <a th:href="@{/shop(search=${searchTerm}, sortBy='category', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Category</a>
+        </th>
+        <th>
+            <a th:href="@{/shop(search=${searchTerm}, sortBy='price', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Price</a>
+        </th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${productPage.getContent()}">  <td><img th:src="@{'/image/' + ${product.imageFileName}}" alt="Product Image" width="100"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.brand}"></td>
+        <td th:text="${product.category}"></td>
+        <td th:text="${product.price} + ' $'"></td>
+        <td><a th:href="@{'/products/details/' + ${product.name}}">View</a></td>
+    </tr>
+    <tr th:if="${productPage.isEmpty()}">
+        <td colspan="6">No products found.</td>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${productPage.totalPages > 1}">
+    <div class="pagination">
+        <a th:if="${productPage.hasPrevious()}"
+           th:href="@{/shop(page=${currentPage - 1}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}">&laquo;</a>
+
+        <th:block th:each="i : ${#numbers.sequence(0, productPage.totalPages - 1)}">
+            <a th:href="@{/shop(page=${i}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+               th:text="${i + 1}"
+               th:class="${currentPage == i ? 'active' : ''}"></a>
+        </th:block>
+
+        <a th:if="${productPage.hasNext()}"
+           th:href="@{/shop(page=${currentPage + 1}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}">&raquo;</a>
+    </div>
+</div>

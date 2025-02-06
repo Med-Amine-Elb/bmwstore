@@ -1,6 +1,8 @@
 package com.bmw.store.Repositories;
 
 import com.bmw.store.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +28,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findTop8ByFeaturedTrueAndStatusTrueOrderByIdDesc();
 
     Optional<Product> findByName(String name);
+
+    Optional<Product> findById(Long id); // Or Optional<Product> findById(Long id); if you want to handle nulls explicitly
+
+    List<Product> findByFeaturedTrue(); // To get featured cars
+
+    List<Product> findByNameContainingIgnoreCaseOrBrandContainingIgnoreCaseOrCategoryContainingIgnoreCase(String name, String brand, String category); // New method for search
+
+    // Add these two methods for pagination:
+    Page<Product> findByNameContainingIgnoreCaseOrBrandContainingIgnoreCaseOrCategoryContainingIgnoreCase(String name, String brand, String category, Pageable pageable);
+
+    Page<Product> findByStatusTrue(Pageable pageable);
 }
