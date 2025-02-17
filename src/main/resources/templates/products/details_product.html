@@ -1,505 +1,534 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Dealership - Product Details</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--font-family-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+
+    <!-- title of site -->
+    <title>Product Details - Next Gear Store</title>
+
+    <!-- For favicon png -->
+    <link rel="shortcut icon" type="image/icon" th:href="@{/image/logo/nxt.jpg}" />
+
+    <!--font-awesome.min.css-->
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+
+    <!--linear icon css-->
+    <link rel="stylesheet" th:href="@{/css/linearicons.css}">
+
+    <!--flaticon.css-->
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
+
+    <!--animate.css-->
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+
+    <!--owl.carousel.css-->
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+
+    <!--bootstrap.min.css-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- bootsnav -->
+    <link rel="stylesheet" th:href="@{/css/bootsnav.css}">
+
+    <!--style.css-->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!--responsive.css-->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
 
     <style>
-        :root {
-            --primary-color: #007bff;
-            --text-color: #333;
-            --background-color: #f4f4f4;
-            --white: #ffffff;
-            --black: #000000;
+        /* Product Details Page Specific Styles */
+        /* Navbar Enhancement */
+        .navbar-default {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(8px);
         }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav {
-            padding: 1rem 0;
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: none;
-        }
-
-        .nav-link {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 1rem;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-
-        .mobile-menu-button {
-            display: block;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .mobile-menu-button span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--black);
-            margin: 5px 0;
-        }
-
-        /* Main Content Styles */
-        .product-details {
-            display: flex;
-            flex-direction: column;
-            margin-top: 2rem;
-        }
-
-        .image-gallery {
-            flex: 1;
-            margin-bottom: 2rem;
-        }
-
-        .main-image {
+        .navbar-default .navbar-nav > li > a {
+            color: #333333 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
             position: relative;
-            margin-bottom: 1rem;
         }
-
-        .main-image img {
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            color: #c00 !important;
+        }
+        .navbar-default .navbar-nav > li > a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #c00;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .navbar-default .navbar-nav > li > a:hover::after {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
         }
-
-        .image-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: var(--white);
-            border: none;
-            font-size: 2rem;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
+        /* Image Container Fixes */
+        .product-gallery {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
         }
-
-        .prev {
-            left: 10px;
-        }
-
-        .next {
-            right: 10px;
-        }
-
-        .image-counter {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: var(--white);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .thumbnails {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-        }
-
-        .thumbnails img {
-            width: 80px;
-            height: 60px;
+        .main-image {
+            width: 100%;
+            height: 400px;
             object-fit: cover;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .thumbnails img.active {
-            border-color: var(--primary-color);
-        }
-
-        .product-info {
-            flex: 1;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .price {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .specifications {
-            margin-top: 2rem;
-        }
-
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .spec-label {
-            font-weight: bold;
-        }
-
-        /* Contact Form Styles */
-        .contact-form {
-            background-color: var(--white);
-            padding: 2rem;
             border-radius: 8px;
-            margin-top: 2rem;
+            transition: transform 0.3s ease;
         }
-
-        .form-group {
-            margin-bottom: 1rem;
+        .main-image:hover {
+            transform: scale(1.02);
         }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea {
+        /* Contact Form Styles */
+        .contact-form-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        /* Footer Styles */
-        footer {
-            background-color: var(--black);
-            color: var(--white);
-            padding: 2rem 0;
-            margin-top: 2rem;
-        }
-
-        .footer-content {
+        .contact-form-overlay.active {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            opacity: 1;
         }
-
-        .footer-section {
-            flex: 1;
-            margin-bottom: 1rem;
-            min-width: 200px;
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            margin: auto;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
         }
-
-        .footer-section h3,
-        .footer-section h4 {
-            margin-bottom: 1rem;
+        .contact-form.active {
+            transform: translateY(0);
         }
-
-        .footer-section ul {
-            list-style-type: none;
-            padding: 0;
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
         }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #c00;
         }
-
-        .footer-section a {
-            color: var(--white);
-            text-decoration: none;
+        /* Enhanced Button Styles */
+        .welcome-btn {
+            background: #c00;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
+        .welcome-btn:hover {
+            background: #a00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(204, 0, 0, 0.2);
         }
-
-        .social-icon {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-color: var(--white);
-            color: var(--black);
-            text-align: center;
-            line-height: 30px;
+        .btn-outline {
+            border: 2px solid #c00;
+            color: #c00;
+            background: transparent;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: #c00;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(204, 0, 0, 0.2);
+        }
+        /* Favorite Button Animation */
+        .btn-favorite {
+            position: relative;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            font-size: 0.8rem;
-            text-decoration: none;
+            border: 2px solid #c00;
+            background: transparent;
+            transition: all 0.3s ease;
         }
-
-        /* Responsive Styles */
-        @media (min-width: 768px) {
-            .nav-links {
-                display: flex;
+        .btn-favorite i {
+            color: #c00;
+            transition: all 0.3s ease;
+        }
+        .btn-favorite:hover {
+            background: #c00;
+        }
+        .btn-favorite:hover i {
+            color: white;
+            transform: scale(1.2);
+        }
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .product-gallery {
+                margin-top: 60px;
             }
 
-            .mobile-menu-button {
-                display: none;
+            .main-image {
+                height: 300px;
             }
 
-            .product-details {
-                flex-direction: row;
-                gap: 2rem;
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .image-gallery {
-                flex: 2;
-            }
-
-            .product-info {
-                flex: 1;
+            .contact-form {
+                width: 95%;
+                padding: 20px;
             }
         }
-
-
     </style>
 </head>
 <body>
-<header>
-    <nav class="nav">
-        <div class="container">
-            <div class="nav-content">
-                <a href="/" class="nav-brand">NXT</a>
-                <div class="nav-links">
-                    <a href="/" class="nav-link">HOME</a>
-                    <a href="/service" class="nav-link">SERVICE</a>
-                    <a href="/newest-cars" class="nav-link">NEWEST CARS</a>
-                    <a href="/featured-cars" class="nav-link">FEATURED CARS</a>
-                    <a href="/brands" class="nav-link">BRANDS</a>
-                    <a href="/contact" class="nav-link">CONTACT</a>
+<!-- Navigation Bar (Same as homepage) -->
+<div class="top-area">
+    <div class="header-area">
+        <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="/">NXT<span></span></a>
                 </div>
-                <button id="mobile-menu-button" class="mobile-menu-button">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#service">Service</a></li>
+                        <li><a href="/#new-cars">Newest Cars</a></li>
+                        <li><a href="/#ban">Featured Cars</a></li>
+                        <li><a href="/#brand">Brands</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                        <li sec:authorize="isAuthenticated()" class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span th:text="${firstName}"></span> <span th:text="${lastName}"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/logout}" class="logout-link">Logout</a></li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="!isAuthenticated()">
+                            <a th:href="@{/login}">Login</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </div>
+    <div class="clearfix"></div>
+</div>
 
-<main class="container">
-    <div class="product-details">
-        <div class="image-gallery">
-            <div class="main-image">
-                <img id="main-image" src="https://via.placeholder.com/800x600" alt="Car Image">
-                <button id="prev-image" class="image-nav prev">&lt;</button>
-                <button id="next-image" class="image-nav next">&gt;</button>
-                <div class="image-counter">1/4</div>
-            </div>
-            <div class="thumbnails">
-                <img src="https://via.placeholder.com/100x75" alt="Thumbnail 1" class="active">
-                <img src="https://via.placeholder.com/100x75" alt="Thumbnail 2">
-                <img src="https://via.placeholder.com/100x75" alt="Thumbnail 3">
-                <img src="https://via.placeholder.com/100x75" alt="Thumbnail 4">
+<!-- Product Details Section -->
+<div class="container">
+    <div class="row">
+        <!-- Product Gallery -->
+        <div class="col-lg-6">
+            <div class="product-gallery">
+                <img id="mainImage" th:src="@{'/image/' + ${product.imageFileName}}" alt="Product Image" class="main-image">
+                <div class="owl-carousel thumbnail-carousel owl-theme">
+                    <div class="item">
+                        <img th:src="@{'/image/' + ${product.imageFileName}}" alt="Thumbnail 1" onclick="updateMainImage(this.src)">
+                    </div>
+                    <!-- Additional thumbnails would be dynamically added here -->
+                </div>
             </div>
         </div>
-        <div class="product-info">
-            <h1>2025 Luxury SUV</h1>
-            <div class="product-meta">
-                <span class="year">2025</span>
-                <span class="mileage">0 Km</span>
-                <button class="favorite">&#9733;</button>
-            </div>
-            <div class="price">$75,000</div>
-            <button id="contact-seller" class="btn-primary">Contact Seller</button>
-            <div class="specifications">
-                <div class="spec-item">
-                    <span class="spec-label">Marque:</span>
-                    <span class="spec-value">Luxury Brand</span>
+
+        <!-- Product Information -->
+        <div class="col-lg-6">
+            <div class="product-info">
+                <h1 class="product-title" th:text="${product.brand + ' ' + product.name}">Product Name</h1>
+                <div class="price" th:text="'€' + ${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}">Price</div>
+
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">Year</div>
+                        <div class="spec-value" th:text="${product.modelYear}">2025</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Transmission</div>
+                        <div class="spec-value" th:text="${product.automatic ? 'Automatic' : 'Manual'}">Automatic</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Mileage</div>
+                        <div class="spec-value" th:text="${product.mileage}">0 Km</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Engine</div>
+                        <div class="spec-value" th:text="${product.engines}">Engine</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Horsepower</div>
+                        <div class="spec-value" th:text="${product.horsepower}">HP</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Fuel Type</div>
+                        <div class="spec-value" th:text="${product.fuelTypes}">Fuel</div>
+                    </div>
                 </div>
-                <div class="spec-item">
-                    <span class="spec-label">Modèle:</span>
-                    <span class="spec-value">SUV Elite</span>
+
+                <div class="action-buttons">
+                    <button class="welcome-btn">Contact Dealer</button>
+                    <button class="btn-outline">Schedule Test Drive</button>
+                    <button class="btn-outline" onclick="addToWishlist()">
+                        <i class="fa fa-heart"></i>
+                    </button>
                 </div>
-                <div class="spec-item">
-                    <span class="spec-label">Année:</span>
-                    <span class="spec-value">2025</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-label">Transmission:</span>
-                    <span class="spec-value">Automatic</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-label">Engine:</span>
-                    <span class="spec-value">3.0L V6 Hybrid</span>
+
+                <h3>Key Features</h3>
+                <ul class="features-list">
+                    <li><i class="fa fa-check"></i> Performance: <span th:text="${product.performance}"></span></li>
+                    <li><i class="fa fa-check"></i> Total Speed: <span th:text="${product.totalSpeed}"></span></li>
+                    <li><i class="fa fa-check"></i> Seats: <span th:text="${product.seats}"></span></li>
+                    <li><i class="fa fa-check"></i> Torque: <span th:text="${product.torque}"></span></li>
+                    <li th:if="${product.ccBatteryCapacity}">
+                        <i class="fa fa-check"></i> Battery Capacity: <span th:text="${product.ccBatteryCapacity}"></span>
+                    </li>
+                </ul>
+
+                <div class="description mt-4">
+                    <h3>Description</h3>
+                    <p th:text="${product.description}">Product description</p>
                 </div>
             </div>
         </div>
     </div>
-    <div id="contact-form" class="contact-form">
-        <h2>Send Message</h2>
-        <form>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="tel" id="phone" name="phone">
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <div class="form-group">
-                <input type="checkbox" id="privacy" name="privacy" required>
-                <label for="privacy">I accept the privacy policy</label>
-            </div>
-            <button type="submit" class="btn-primary">Send</button>
-        </form>
-    </div>
-</main>
+</div>
 
-<footer>
+<!-- Footer/Contact Section (Same as homepage) -->
+<footer id="contact" class="contact">
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Luxury Auto</h3>
-                <p>Luxury Auto est la référence pour l'achat et la vente de véhicules de luxe d'occasion.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="/">• Accueil</a></li>
-                    <li><a href="/stock">• Stock</a></li>
-                    <li><a href="/contact">• Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <ul>
-                    <li>📞 +1 234 567 890</li>
-                    <li>✉️ info@luxuryauto.com</li>
-                    <li>📍 123 Luxury Lane, Prestige City</li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <a href="#" class="social-icon">FB</a>
-                    <a href="#" class="social-icon">IG</a>
-                    <a href="#" class="social-icon">LI</a>
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <div class="footer-logo">
+                            <a href="#">NXT</a>
+                        </div>
+                        <p>
+                            Ased do eiusm tempor incidi ut labore et dolore magnaian aliqua. Ut enim ad minim veniam.
+                        </p>
+                        <div class="footer-contact">
+                            <p>info@themesine.com</p>
+                            <p>+1 (885) 2563154554</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h2>about devloon</h2>
+                        <ul>
+                            <li><a href="#">about us</a></li>
+                            <li><a href="#">career</a></li>
+                            <li><a href="#">terms <span> of service</span></a></li>
+                            <li><a href="#">privacy policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                    <div class="single-footer-widget">
+                        <h2>top brands</h2>
+                        <div class="row">
+                            <div class="col-md-7 col-xs-6">
+                                <ul>
+                                    <li><a href="#">BMW</a></li>
+                                    <li><a href="#">audi</a></li>
+                                    <li><a href="#">Honda</a></li>
+                                    <li><a href="#">porsche</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-1 col-md-3 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h2>news letter</h2>
+                        <div class="footer-newsletter">
+                            <p>
+                                Subscribe to get latest news update and informations
+                            </p>
+                        </div>
+                        <div class="hm-foot-email">
+                            <div class="foot-email-box">
+                                <input type="text" class="form-control" placeholder="Add Email">
+                            </div>
+                            <div class="foot-email-subscribe">
+                                <span><i class="fa fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        &copy; copyright.designed and developed by <a href="https://www.themesine.com/">themesine</a>.
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <div class="footer-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fa fa-behance"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="scroll-Top">
+        <div class="return-to-top">
+            <i class="fa fa-angle-up" id="scroll-top-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
         </div>
     </div>
 </footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script th:src="@{/js/bootsnav.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const mainImage = document.getElementById('main-image');
-        const prevButton = document.getElementById('prev-image');
-        const nextButton = document.getElementById('next-image');
-        const thumbnails = document.querySelectorAll('.thumbnails img');
-        const imageCounter = document.querySelector('.image-counter');
-        const contactSellerButton = document.getElementById('contact-seller');
-        const contactForm = document.getElementById('contact-form');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const navLinks = document.querySelector('.nav-links');
-
-        let currentImageIndex = 0;
-
-        // Image gallery functionality
-        function updateMainImage(index) {
-            mainImage.src = thumbnails[index].src.replace('100x75', '800x600');
-            thumbnails.forEach(thumb => thumb.classList.remove('active'));
-            thumbnails[index].classList.add('active');
-            imageCounter.textContent = `${index + 1}/${thumbnails.length}`;
-        }
-
-        prevButton.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex - 1 + thumbnails.length) % thumbnails.length;
-            updateMainImage(currentImageIndex);
+    $(document).ready(function(){
+        // Initialize Owl Carousel
+        $('.thumbnail-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: false,
+            responsive:{
+                0: {
+                    items: 3
+                },
+                600: {
+                    items: 4
+                },
+                1000: {
+                    items: 5
+                }
+            }
         });
 
-        nextButton.addEventListener('click', () => {
-            currentImageIndex = (currentImageIndex + 1) % thumbnails.length;
-            updateMainImage(currentImageIndex);
-        });
+        // Initialize Bootstrap tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
-        thumbnails.forEach((thumbnail, index) => {
-            thumbnail.addEventListener('click', () => {
-                currentImageIndex = index;
-                updateMainImage(currentImageIndex);
+    // Update main image when clicking thumbnails
+    function updateMainImage(src) {
+        document.getElementById('mainImage').src = src;
+    }
+
+    // Wishlist functionality
+    function addToWishlist() {
+        const wishlistBtn = event.currentTarget;
+        const icon = wishlistBtn.querySelector('i');
+        icon.classList.toggle('far');
+        icon.classList.toggle('fas');
+        icon.classList.toggle('text-danger');
+    }
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
+    });
+    // Contact Form Functionality
+    function showContactForm() {
+        const overlay = document.createElement('div');
+        overlay.className = 'contact-form-overlay';
 
-        // Smooth scroll to contact form
-        contactSellerButton.addEventListener('click', (e) => {
+        const form = document.createElement('form');
+        form.className = 'contact-form';
+
+        form.innerHTML = `
+    <h3>Contact Dealer</h3>
+    <input type="text" placeholder="Name" required>
+    <input type="email" placeholder="Email" required>
+    <input type="tel" placeholder="Phone">
+    <textarea placeholder="Message" rows="4" required></textarea>
+    <button type="submit" class="welcome-btn">Send Message</button>
+    <button type="button" class="btn-outline" onclick="closeContactForm()">Cancel</button>
+  `;
+
+        overlay.appendChild(form);
+        document.body.appendChild(overlay);
+
+        // Trigger animation
+        setTimeout(() => {
+            overlay.classList.add('active');
+            form.classList.add('active');
+        }, 10);
+
+        form.onsubmit = (e) => {
             e.preventDefault();
-            contactForm.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                document.getElementById('name').focus();
-            }, 500);
-        });
-
-        // Mobile menu toggle
-        mobileMenuButton.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-// Initialize the page
-        updateMainImage(currentImageIndex)
+            // Add your form submission logic here
+            alert('Thank you! Your message has been sent.');
+            closeContactForm();
+        };
+    }
+    function closeContactForm() {
+        const overlay = document.querySelector('.contact-form-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            setTimeout(() => overlay.remove(), 300);
+        }
+    }
+    // Initialize page functionality
+    document.addEventListener('DOMContentLoaded', () => {
+        // Contact button functionality
+        const contactBtn = document.querySelector('.welcome-btn');
+        if (contactBtn) {
+            contactBtn.addEventListener('click', showContactForm);
+        }
     });
 </script>
-<script src="script.js"></script>
 </body>
 </html>
-
