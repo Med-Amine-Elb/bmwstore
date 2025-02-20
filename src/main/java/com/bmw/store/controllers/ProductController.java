@@ -29,6 +29,7 @@
 
     import java.nio.file.StandardCopyOption;
     import java.security.Principal;
+    import java.util.ArrayList;
     import java.util.Date;
     import java.util.List;
 
@@ -200,24 +201,20 @@
 
         @GetMapping("/car/{id}")
         public String getCarDetails(@PathVariable Long id, Model model) {
-            Product product = productService.getProductById(id); // Get the product
+            Product product = productService.getProductById(id);
+            model.addAttribute("product", product);
 
-            if (product == null) {
-                model.addAttribute("errorMessage", "Product not found."); // Error message
-                List<Product> featuredProducts = productService.getFeaturedProducts();
-                model.addAttribute("featuredProducts", featuredProducts);
-                return "/products/details_product"; // Return to the template even if product is null
-            }
-
-            model.addAttribute("product", product); // Add the product to the model!
             List<Product> featuredProducts = productService.getFeaturedProducts();
+            if (featuredProducts == null) {
+                featuredProducts = new ArrayList<>();
+            }
+            System.out.println("Featured Products size: " + featuredProducts.size());
             model.addAttribute("featuredProducts", featuredProducts);
 
-
-
-
-            return "/products/details_product";
+            return "products/details_product";
         }
+
+
 
 
 

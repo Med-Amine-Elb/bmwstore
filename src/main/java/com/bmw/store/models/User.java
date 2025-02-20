@@ -38,5 +38,5 @@ public class User {
 
     private String address;
 
-    // Getters and Setters
+
 }

@@ -1,349 +1,623 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${product.name + ' - NXT Car Dealership'}">Product - NXT Car Dealership</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --hover-color: #e74c3c;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-        }
-
-        .navbar {
-            background-color: var(--primary-color) !important;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
-
-        .product-image {
-            max-height: 500px;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-
-        .product-image:hover {
-            transform: scale(1.05);
-        }
-
-        .product-title {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .product-price {
-            color: var(--secondary-color);
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .specs-item {
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            cursor: default;
-        }
-
-        .specs-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            background-color: var(--hover-color);
-            color: white;
-        }
-
-        .specs-item i {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-
-        .btn-contact {
-            background-color: var(--accent-color);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .btn-contact:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .swiper {
-            width: 100%;
-            height: 300px;
-        }
-
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            background: #fff;
-        }
-
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
+    <title th:text="${product.name} + ' | BMW Store'">NXT Product Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/detail_product.css}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-<!-- Navbar (unchanged) -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold animate__animated animate__fadeIn" href="#">NXT</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link animate__animated animate__fadeIn" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link animate__animated animate__fadeIn" href="#">Shop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link animate__animated animate__fadeIn" href="#">Featured Cars</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link animate__animated animate__fadeIn" href="#">Brands</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link animate__animated animate__fadeIn" href="#">Contact</a>
-                </li>
-            </ul>
+<!-- Navigation Bar -->
+<nav id="main-nav">
+    <div class="container nav-container">
+        <div class="logo">
+            <a th:href="@{/}">
+                <img th:src="@{/image/logo/nxt.jpg}" alt="BMW Store Logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/}" class="nav-link">Home</a>
+            <a th:href="@{/products}" class="nav-link">Vehicles</a>
+            <a th:href="@{/services}" class="nav-link">Services</a>
+            <a th:href="@{/about}" class="nav-link">About</a>
+            <a th:href="@{/contact}" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <a th:href="@{/cart}" class="icon-btn cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" th:text="${cartCount ?: 0}">0</span>
+            </a>
+            <a th:href="@{/account}" class="icon-btn user-btn">
+                <i class="fas fa-user"></i>
+            </a>
         </div>
     </div>
 </nav>
 
-<!-- Product Details -->
-<div class="container mt-5 pt-5">
-    <div class="row g-4">
-        <!-- Product Image -->
-        <div class="col-lg-6">
-            <img th:src="@{'/image/' + ${product.imageFileName}}" th:alt="${product.name}"
-                 class="img-fluid rounded product-image animate__animated animate__fadeInLeft"
-                 loading="lazy">
-        </div>
-
-        <!-- Product Info -->
-        <div class="col-lg-6 animate__animated animate__fadeInRight">
-            <h1 class="product-title" th:text="${product.name}">Product Name</h1>
-            <p class="product-price mt-3" th:text="${'$' + #numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$99,999.00</p>
-
-            <hr>
-
-            <div class="row g-3 mt-3">
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-engine-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Engine</small>
-                            <span th:text="${product.engines}">Engine Type</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-speed-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Top Speed</small>
-                            <span th:text="${product.totalSpeed}">Top Speed</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-gas-station-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Fuel Type</small>
-                            <span th:text="${product.fuelTypes}">Fuel Type</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-user-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Seats</small>
-                            <span th:text="${product.seats + ' Seats'}">Seats</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-steering-2-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Transmission</small>
-                            <span th:text="${product.automatic ? 'Automatic' : 'Manual'}">Transmission</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-rocket-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Torque</small>
-                            <span th:text="${product.torque}">Torque</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-battery-2-charge-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Battery Capacity</small>
-                            <span th:text="${product.ccBatteryCapacity}">Battery Capacity</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="specs-item">
-                        <i class="ri-dashboard-3-fill"></i>
-                        <div>
-                            <small class="text-muted d-block">Performance</small>
-                            <span th:text="${product.performance}">Performance</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            <p class="mt-4" th:text="${product.description}">Product description goes here.</p>
-
-            <div class="d-grid gap-2 d-md-flex mt-4">
-                <button class="btn btn-contact flex-fill" onclick="showContactForm()">Contact Dealer</button>
-                <button class="btn btn-outline-secondary flex-fill" onclick="showTestDriveForm()">Schedule Test Drive</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Featured Cars Section (unchanged) -->
-    ...
-</div>
-
-<!-- Contact Modal -->
-<div class="modal fade" id="contactModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Contact Dealer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="contactForm">
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Message</label>
-                        <textarea class="form-control" rows="3" required></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-contact" onclick="handleContactSubmit()">Send</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Test Drive Modal -->
-<div class="modal fade" id="testDriveModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Schedule Test Drive</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="testDriveForm">
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Preferred Date</label>
-                        <input type="date" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Preferred Time</label>
-                        <input type="time" class="form-control" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-contact" onclick="handleTestDriveSubmit()">Schedule</button>
-            </div>
-        </div>
-    </div>
-</div>
-<footer class="bg-light mt-5 py-5">
+<!-- Main Content -->
+<main class="product-detail">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>About NXT</h3>
-                <p class="text-muted">
-                    NXT is your premier destination for luxury and performance vehicles.
-                    We offer an exclusive selection of the world's finest automobiles.
-                </p>
-                <p class="mb-1">Email: nxt@gmail.com</p>
-                <p>Phone: +1 (885) 2563154554</p>
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a th:href="@{/}">Home</a>
+            <span class="separator">/</span>
+            <a th:href="@{/products}">Vehicles</a>
+            <span class="separator">/</span>
+            <a th:href="@{/products/category/{category}(category=${product.category})}" th:text="${product.category}">Category</a>
+            <span class="separator">/</span>
+            <span th:text="${product.name}">Product Name</span>
+        </div>
+
+        <div class="product-container">
+            <!-- Product Image Section -->
+            <div class="product-images">
+                <div class="main-image-container">
+                    <img id="main-product-image" th:src="@{'/public/image/' + ${product.imageFileName}}" th:alt="${product.name}" class="main-image">
+                    <div class="image-overlay">
+                        <button class="zoom-btn"><i class="fas fa-search-plus"></i></button>
+                    </div>
+                    <img id="main-product-image" th:src="@{'/public/image/' + ${product.imageFileName}}" th:alt="${product.name}" class="main-image">
+                    <div class="image-overlay">
+                        <button class="zoom-btn"><i class="fas fa-search-plus"></i></button>
+                    </div>
+                </div>
+                <div class="thumbnail-gallery">
+                    <!-- Main image thumbnail -->
+                    <div class="thumbnail active" data-image-index="0">
+                        <img th:src="@{'/public/image/' + ${product.imageFileName}}" th:alt="${product.name}">
+                    </div>
+
+                    <!-- Additional thumbnails would be dynamically loaded -->
+                    <!--
+                    <div class="thumbnail" data-image-index="1">
+                        <img th:src="@{'/public/image/' + ${product.imageFileName} + '-angle1.jpg'}" th:alt="${product.name} + ' Angle 1'">
+                    </div>
+                    <div class="thumbnail" data-image-index="2">
+                        <img th:src="@{'/public/image/' + ${product.imageFileName} + '-angle2.jpg'}" th:alt="${product.name} + ' Angle 2'">
+                    </div>
+                    <div class="thumbnail" data-image-index="3">
+                        <img th:src="@{'/public/image/' + ${product.imageFileName} + '-interior.jpg'}" th:alt="${product.name} + ' Interior'">
+                    </div>
+                        -->
+                </div>
             </div>
-            <div class="col-md-6">
-                <h3>Newsletter</h3>
-                <form class="mt-3">
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Enter your email">
-                        <button class="btn btn-contact" type="submit">Subscribe</button>
+
+            <!-- Product Information Section -->
+            <div class="product-info">
+                <div class="product-header">
+                    <h1 class="product-title" th:text="${product.name}">BMW Product Name</h1>
+                    <div class="product-brand">
+                        <span>Brand:</span>
+                        <strong th:text="${product.brand}">BMW</strong>
+                    </div>
+                    <div class="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-count">(42 reviews)</span>
+                    </div>
+                </div>
+
+                <div class="product-price">
+                    <div class="current-price">
+                        <i class="fas fa-tag"></i>
+                        <span th:text="${'$' + #numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$75,000.00</span>
+                    </div>
+                    <div class="financing">
+                        <span>Financing available from</span>
+                        <strong th:text="${'$' + #numbers.formatDecimal(product.price / 60, 0, 'COMMA', 2, 'POINT') + '/mo'}">$1,250.00/mo</strong>
+                    </div>
+                </div>
+
+                <!-- Color Variant Selector -->
+                <div class="variant-selector">
+                    <h3>Exterior Color</h3>
+                    <div class="color-options">
+                        <button class="color-option active" style="background-color: #1c1c1c;" data-color="Black Sapphire Metallic" title="Black Sapphire Metallic"></button>
+                        <button class="color-option" style="background-color: #c0c0c0;" data-color="Glacier Silver Metallic" title="Glacier Silver Metallic"></button>
+                        <button class="color-option" style="background-color: #0066b1;" data-color="Portimao Blue Metallic" title="Portimao Blue Metallic"></button>
+                        <button class="color-option" style="background-color: #7c0a02;" data-color="Aventurine Red Metallic" title="Aventurine Red Metallic"></button>
+                        <button class="color-option" style="background-color: #f0f0f0;" data-color="Alpine White" title="Alpine White"></button>
+                    </div>
+                    <p class="selected-variant">Selected: <span id="selected-color">Black Sapphire Metallic</span></p>
+                </div>
+
+                <!-- Key Specifications -->
+                <div class="key-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="spec-content">
+                            <span class="spec-label">Model Year</span>
+                            <span class="spec-value" th:text="${product.modelYear}">2023</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <div class="spec-content">
+                            <span class="spec-label">Mileage</span>
+                            <span class="spec-value" th:text="${product.mileage}">0 miles</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-bolt"></i>
+                        <div class="spec-content">
+                            <span class="spec-label">Horsepower</span>
+                            <span class="spec-value" th:text="${product.horsepower}">503 hp</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-cogs"></i>
+                        <div class="spec-content">
+                            <span class="spec-label">Transmission</span>
+                            <span class="spec-value" th:text="${product.automatic ? 'Automatic' : 'Manual'}">Automatic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Description Accordion -->
+                <div class="product-description">
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <i class="fas fa-info-circle"></i>
+                                <h3>Overview</h3>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p th:text="${product.description}">Product description goes here...</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <i class="fas fa-car"></i>
+                                <h3>Performance</h3>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul class="specs-list">
+                                    <li>
+                                        <span class="spec-name">Engine:</span>
+                                        <span class="spec-value" th:text="${product.engines}">Twin-Turbo Inline-6</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Capacity:</span>
+                                        <span class="spec-value" th:text="${product.ccBatteryCapacity}">3.0L</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Top Speed:</span>
+                                        <span class="spec-value" th:text="${product.totalSpeed}">155 mph</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Performance:</span>
+                                        <span class="spec-value" th:text="${product.performance}">0-60 mph in 3.8s</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Torque:</span>
+                                        <span class="spec-value" th:text="${product.torque}">479 lb-ft</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <i class="fas fa-gas-pump"></i>
+                                <h3>Fuel & Efficiency</h3>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul class="specs-list">
+                                    <li>
+                                        <span class="spec-name">Fuel Type:</span>
+                                        <span class="spec-value" th:text="${product.fuelTypes}">Premium Unleaded</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">City MPG:</span>
+                                        <span class="spec-value">16 mpg</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Highway MPG:</span>
+                                        <span class="spec-value">23 mpg</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Combined MPG:</span>
+                                        <span class="spec-value">19 mpg</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <i class="fas fa-couch"></i>
+                                <h3>Interior</h3>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul class="specs-list">
+                                    <li>
+                                        <span class="spec-name">Seats:</span>
+                                        <span class="spec-value" th:text="${product.seats}">5</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Upholstery:</span>
+                                        <span class="spec-value">Premium Leather</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Infotainment:</span>
+                                        <span class="spec-value">12.3" Touchscreen</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-name">Sound System:</span>
+                                        <span class="spec-value">Harman Kardon Surround Sound</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase Form -->
+                <div class="purchase-form">
+                    <div class="quantity-selector">
+                        <label for="quantity">Quantity</label>
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-btn minus-btn">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="10">
+                            <button type="button" class="quantity-btn plus-btn">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="purchase-buttons">
+                        <button id="add-to-cart" class="btn add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                        <button id="buy-now" class="btn buy-now-btn">
+                            <i class="fas fa-bolt"></i>
+                            Buy Now
+                        </button>
+                    </div>
+
+                    <div class="payment-methods">
+                        <span>Secure Payment Options:</span>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fab fa-apple-pay"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <h2 class="section-title">Customer Reviews</h2>
+            <div class="reviews-summary">
+                <div class="average-rating">
+                    <div class="rating-number">4.5</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="total-reviews">Based on 42 reviews</div>
+                </div>
+                <div class="rating-bars">
+                    <div class="rating-bar">
+                        <span class="rating-label">5 Stars</span>
+                        <div class="bar-container">
+                            <div class="bar" style="width: 75%;"></div>
+                        </div>
+                        <span class="rating-count">32</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="rating-label">4 Stars</span>
+                        <div class="bar-container">
+                            <div class="bar" style="width: 15%;"></div>
+                        </div>
+                        <span class="rating-count">6</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="rating-label">3 Stars</span>
+                        <div class="bar-container">
+                            <div class="bar" style="width: 5%;"></div>
+                        </div>
+                        <span class="rating-count">2</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="rating-label">2 Stars</span>
+                        <div class="bar-container">
+                            <div class="bar" style="width: 3%;"></div>
+                        </div>
+                        <span class="rating-count">1</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="rating-label">1 Star</span>
+                        <div class="bar-container">
+                            <div class="bar" style="width: 2%;"></div>
+                        </div>
+                        <span class="rating-count">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reviews-filter">
+                <div class="filter-options">
+                    <label for="review-sort">Sort by:</label>
+                    <select id="review-sort" name="review-sort">
+                        <option value="newest">Newest First</option>
+                        <option value="highest">Highest Rated</option>
+                        <option value="lowest">Lowest Rated</option>
+                    </select>
+                </div>
+                <button class="btn write-review-btn">
+                    <i class="fas fa-pen"></i>
+                    Write a Review
+                </button>
+            </div>
+
+            <div class="reviews-list">
+                <!-- Review Item 1 -->
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="/images/avatars/avatar1.jpg" alt="John D.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4 class="reviewer-name">John D.</h4>
+                                <div class="review-date">June 15, 2023</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fas fa-check-circle"></i>
+                                Verified Purchase
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h5 class="review-title">Absolutely Stunning Performance</h5>
+                        <p class="review-text">The driving experience is unmatched. The power delivery is smooth yet explosive when needed. Interior quality is top-notch, and the technology features are intuitive. Couldn't be happier with my purchase!</p>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-images">
+                            <img src="/images/reviews/review1-img1.jpg" alt="Review Image 1">
+                            <img src="/images/reviews/review1-img2.jpg" alt="Review Image 2">
+                        </div>
+                        <div class="review-helpful">
+                            <span>Was this review helpful?</span>
+                            <button class="helpful-btn">
+                                <i class="fas fa-thumbs-up"></i>
+                                Yes (12)
+                            </button>
+                            <button class="helpful-btn">
+                                <i class="fas fa-thumbs-down"></i>
+                                No (2)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Item 2 -->
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="/images/avatars/avatar2.jpg" alt="Sarah M.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4 class="reviewer-name">Sarah M.</h4>
+                                <div class="review-date">May 28, 2023</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <div class="verified-badge">
+                                <i class="fas fa-check-circle"></i>
+                                Verified Purchase
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h5 class="review-title">Great Car, Minor Issues</h5>
+                        <p class="review-text">The performance and handling are exceptional. The only drawbacks are the somewhat limited trunk space and the learning curve for the infotainment system. Overall, I'm very satisfied with the vehicle.</p>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-helpful">
+                            <span>Was this review helpful?</span>
+                            <button class="helpful-btn">
+                                <i class="fas fa-thumbs-up"></i>
+                                Yes (8)
+                            </button>
+                            <button class="helpful-btn">
+                                <i class="fas fa-thumbs-down"></i>
+                                No (1)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Reviews Button -->
+                <div class="more-reviews">
+                    <button class="btn load-more-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        Load More Reviews
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="related-products">
+            <h2 class="section-title">You May Also Like</h2>
+            <div class="products-grid">
+                <!-- Related products would be dynamically loaded -->
+                <div class="product-card" th:each="relatedProduct : ${relatedProducts}">
+                    <div class="product-image">
+                        <img th:src="@{'/public/image/' + ${relatedProduct.imageFileName}}" th:alt="${relatedProduct.name}">
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name" th:text="${relatedProduct.name}">Related Product Name</h3>
+                        <div class="product-price" th:text="${'$' + #numbers.formatDecimal(relatedProduct.price, 0, 'COMMA', 2, 'POINT')}">$65,000.00</div>
+                        <a th:href="@{'/products/' + ${relatedProduct.id}}" class="btn view-details-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column brand-column">
+                <div class="footer-logo">
+                    <img th:src="@{/image/logo/nxt.jpg}" alt="BMW Store Logo">
+                </div>
+                <p class="footer-description">Experience the ultimate driving machine. BMW Store offers premium vehicles with exceptional performance and luxury.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-heading">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/}">Home</a></li>
+                    <li><a th:href="@{/products}">Vehicles</a></li>
+                    <li><a th:href="@{/services}">Services</a></li>
+                    <li><a th:href="@{/about}">About Us</a></li>
+                    <li><a th:href="@{/contact}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-heading">Customer Service</h3>
+                <ul class="footer-links">
+                    <li><a th:href="@{/faq}">FAQ</a></li>
+                    <li><a th:href="@{/shipping}">Shipping & Delivery</a></li>
+                    <li><a th:href="@{/returns}">Returns & Refunds</a></li>
+                    <li><a th:href="@{/warranty}">Warranty</a></li>
+                    <li><a th:href="@{/privacy}">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-heading">Newsletter</h3>
+                <p class="newsletter-text">Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email Address" required>
+                        <button type="submit" class="btn subscribe-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
                     </div>
                 </form>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (800) BMW-DRIVE</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@bmwstore.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                &copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2023</span> BMW Store. All Rights Reserved.
+            </div>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-apple-pay"></i>
             </div>
         </div>
     </div>
+    <button id="back-to-top" class="back-to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 </footer>
-<!-- Footer (unchanged) -->
-...
 
-<!-- Modals (unchanged) -->
-...
+<!-- Image Zoom Modal -->
+<div id="image-zoom-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img id="zoomed-image" src="/placeholder.svg" alt="Zoomed Image">
+        <div class="zoom-controls">
+            <button id="prev-image" class="zoom-control-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button id="next-image" class="zoom-control-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-
+<!-- Add to Cart Confirmation Modal -->
+<div id="cart-confirmation-modal" class="modal">
+    <div class="modal-content cart-modal">
+        <span class="close-modal">&times;</span>
+        <div class="cart-confirmation">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Item Added to Cart!</h3>
+            <div class="added-product">
+                <div class="added-product-image">
+                    <img th:src="@{'/public/image/' + ${product.imageFileName}}" th:alt="${product.name}">
+                </div>
+                <div class="added-product-details">
+                    <h4 th:text="${product.name}">Product Name</h4>
+                    <p class="added-product-price" th:text="${'$' + #numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">$75,000.00</p>
+                    <p class="added-product-quantity">Quantity: <span id="modal-quantity">1</span></p>
+                </div>
+            </div>
+            <div class="cart-actions">
+                <button class="btn continue-shopping-btn">Continue Shopping</button>
+                <a th:href="@{/cart}" class="btn view-cart-btn">View Cart</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/detail_product.js}"></script>
+<script th:src="@{/js/reveiw-customers.js}"></script>
 </body>
 </html>
+
