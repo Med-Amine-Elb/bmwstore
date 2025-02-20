@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,28 +21,41 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index", "/static/**", "/css/**", "/js/**", "/image/**",
-                                "/public/**", "/register", "/login","/image/**").permitAll()
-                        .requestMatchers("/products/create", "/products/save", "/image/**", "/products/edit-product", "/products/delete","/products/details-product").hasRole("ADMIN")
+                        .requestMatchers("/", "/index", "/static/**", "/css/**", "/js/**",
+                                "/image/**", "/public/**", "/register", "/login", "/car/**",
+                                "/products/details_product", "/shop")
+                        .permitAll()
+                        .requestMatchers("/products/create", "/products/save",
+                                "/products/edit-product", "/products/delete")
+                        .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/index",true)
+                        .defaultSuccessUrl("/index", true)  // Added true parameter
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/index") // Redirect to home page after logout
+                        .logoutSuccessUrl("/index")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 )
-
-                /*.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll() // Allow all requests
-                )*/
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .invalidSessionUrl("/login")
+                        .maximumSessions(1)
+                        .expiredUrl("/login")
+                )
+                .rememberMe(remember -> remember
+                        .key("uniqueAndSecret")
+                        .tokenValiditySeconds(86400) // 24 hours
+                )
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

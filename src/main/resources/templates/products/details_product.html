@@ -31,6 +31,7 @@
         }
 
         .product-image {
+            margin-top: 120px;
             max-height: 500px;
             object-fit: contain;
             transition: transform 0.3s ease;
@@ -85,29 +86,127 @@
             transform: translateY(-2px);
         }
 
+        /* Updated Swiper Styles */
         .swiper {
             width: 100%;
-            height: 300px;
+            height: 400px;
+            margin: 20px 0;
         }
 
         .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            background: #fff;
+            height: auto;
         }
 
-        .swiper-slide img {
-            display: block;
-            width: 100%;
+        .card {
             height: 100%;
+        }
+
+        .card-img-top {
+            height: 200px;
             object-fit: cover;
+        }
+
+
+        .booking-form .form-group {
+            margin-bottom: 15px; /* Ajoute un espace en dessous de chaque groupe de formulaire */
+        }
+
+        .booking-form .form-control,
+        .booking-form .form-select {
+            padding: 10px; /* Ajoute un peu de rembourrage interne pour l'espacement */
+            border: 1px solid #ced4da; /* Optionnel: ajoute une bordure pour une meilleure visibilité */
+            border-radius: 4px; /* Optionnel: ajoute des coins arrondis */
+        }
+
+        .booking-form .row {
+            margin-bottom: -15px; /* Compense le margin-bottom des form-groups pour éviter un espace excessif après chaque ligne */
+        }
+
+        .booking-form .row > div[class^="col-"] {
+            padding-bottom: 15px; /* Ajoute un espace en dessous des colonnes (pour les form-groups) */
+        }
+
+        /*pament methode*/
+        .payment-container {
+            max-width: 600px;
+            padding: 32px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px auto;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        .payment-option:hover {
+            background-color: #f9fafb;
+        }
+        .payment-option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+        }
+        .payment-description {
+            color: #6b7280;
+            font-size: 14px;
+            margin-left: 28px;
+            margin-bottom: 16px;
+        }
+        .payment-option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .card-logos {
+            display: flex;
+            gap: 8px;
+        }
+        .card-logos img {
+            height: 32px;
+            object-fit: contain;
+        }
+        .paypal-logo {
+            height: 24px;
+            object-fit: contain;
+        }
+        .submit-button {
+            margin-top: 32px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .submit-button button {
+            padding: 8px 24px;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .submit-button button:hover {
+            background-color: #1e40af;
         }
     </style>
 </head>
 <body>
-<!-- Navbar (unchanged) -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand fw-bold animate__animated animate__fadeIn" href="#">NXT</a>
@@ -131,7 +230,18 @@
                 <li class="nav-item">
                     <a class="nav-link animate__animated animate__fadeIn" href="#">Contact</a>
                 </li>
+                <!-- If user is logged in, show their name -->
+                <li class="nav-item" th:if="${firstName != null}">
+                    <a class="nav-link animate__animated animate__fadeIn" href="#">
+                        Welcome, <span th:text="${firstName}"></span> <span th:text="${lastName}"></span>
+                    </a>
+                </li>
+                <!-- If user is not logged in, show Login link -->
+                <li class="nav-item" th:if="${firstName == null}">
+                    <a class="nav-link animate__animated animate__fadeIn" href="/login">Login</a>
+                </li>
             </ul>
+
         </div>
     </div>
 </nav>
@@ -233,15 +343,182 @@
             <p class="mt-4" th:text="${product.description}">Product description goes here.</p>
 
             <div class="d-grid gap-2 d-md-flex mt-4">
-                <button class="btn btn-contact flex-fill" onclick="showContactForm()">Contact Dealer</button>
-                <button class="btn btn-outline-secondary flex-fill" onclick="showTestDriveForm()">Schedule Test Drive</button>
+                <button id="contactButton" class="btn btn-contact flex-fill">Contact Dealer</button>
+                <button id="testDriveButton" class="btn btn-outline-secondary flex-fill">Schedule Test Drive</button>
             </div>
         </div>
     </div>
 
-    <!-- Featured Cars Section (unchanged) -->
-    ...
+    <div class="container mt-5 pt-5">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="booking-form">
+                    <h2>Booking Details</h2>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your First Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your Last Name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Your Email Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="tel" class="form-control" placeholder="Your Phone Number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="From Address">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="To Address">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-select">
+                                        <option>1 Person</option>
+                                        <option>2 Persons</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-select">
+                                        <option>1 Luggage</option>
+                                        <option>2 Luggages</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="time" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="Write"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- methode paiment Section -->
+            <div class="col-lg-6">
+                <div class="payment-container" style="margin-top : -34px;">
+                    <h2>Payment Method</h2>
+
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="bank">
+                            <span>Direct Bank Transfer</span>
+                        </label>
+                        <div class="payment-description">
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt molestias aspernatur quisquam fugit eius quas exercitationem laboriosam praesentium illum similique!
+                        </div>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cheque">
+                            <span>Cheque Payment</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="credit">
+                            <div class="payment-option-content">
+                                <span>Credit Card</span>
+                                <div class="card-logos">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/100px-Mastercard-logo.svg.png" alt="Mastercard">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/100px-Visa_Inc._logo.svg.png" alt="Visa">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/100px-American_Express_logo_%282018%29.svg.png" alt="Amex">
+                                </div>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="paypal">
+                            <div class="payment-option-content">
+                                <span>Paypal</span>
+                                <img class="paypal-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/100px-PayPal.svg.png" alt="PayPal">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="submit-button">
+                        <button>Reserve Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Cars Section -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Featured Cars</h2>
+
+        <!-- Changed from featuredProducts.empty to #lists.isEmpty(featuredProducts) -->
+        <div th:if="${#lists.isEmpty(featuredProducts)}" class="text-center">
+            <p>No featured cars available</p>
+        </div>
+
+        <!-- Changed from not featuredProducts.empty to !#lists.isEmpty(featuredProducts) -->
+        <div th:if="${!#lists.isEmpty(featuredProducts)}" class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" th:each="car : ${featuredProducts}">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img th:src="@{'/image/' + ${car.imageFileName}}"
+                             th:alt="${car.name}"
+                             class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" th:text="${car.name}">Car Name</h5>
+                            <p class="card-text text-primary fw-bold"
+                               th:text="${'$' + #numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}">
+                                $XX,XXX
+                            </p>
+                            <a th:href="@{'/car/' + ${car.id}}"
+                               class="btn btn-sm btn-primary">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+
 </div>
+
 
 <!-- Contact Modal -->
 <div class="modal fade" id="contactModal" tabindex="-1">
@@ -334,16 +611,65 @@
         </div>
     </div>
 </footer>
-<!-- Footer (unchanged) -->
-...
 
-<!-- Modals (unchanged) -->
-...
-
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+<!-- Updated Swiper Initialization -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Contact and Test Drive Modal handlers
+        const contactButton = document.getElementById('contactButton');
+        const testDriveButton = document.getElementById('testDriveButton');
+        const contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+        const testDriveModal = new bootstrap.Modal(document.getElementById('testDriveModal'));
+
+        contactButton.addEventListener('click', () => {
+            contactModal.show();
+        });
+
+        testDriveButton.addEventListener('click', () => {
+            testDriveModal.show();
+        });
+
+        // Initialize Swiper
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+            },
+            breakpoints: {
+                768: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 30 }
+            }
+        });
+    });
+
+    function handleContactSubmit() {
+        alert('Contact form submitted!');
+        bootstrap.Modal.getInstance(document.getElementById('contactModal')).hide();
+    }
+
+    function handleTestDriveSubmit() {
+        alert('Test drive scheduled!');
+        bootstrap.Modal.getInstance(document.getElementById('testDriveModal')).hide();
+    }
+    /*paiment methode*/
+    document.querySelectorAll('input[name="payment"]').forEach(input => {
+        input.addEventListener('change', (e) => {
+            console.log('Selected payment method:', e.target.value);
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -1,66 +1,229 @@
-<form th:action="@{/shop}" method="get">
-    <input type="text" name="search" th:value="${searchTerm}" placeholder="Search products...">
-    <button type="submit">Search</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dealership Shop</title>
+    <!-- Google Fonts for sleek typography -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #333;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        header {
+            background: url('https://via.placeholder.com/1200x400?text=Car+Dealership+Banner') no-repeat center center/cover;
+            height: 400px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        /* Search Form */
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        form input[type="text"], form select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1;
+            min-width: 200px;
+        }
+        form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        /* Grid Layout for Products */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .image-container:hover img {
+            transform: scale(1.1);
+        }
+        .product-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            transition: border-color 0.5s ease;
+        }
+        .product-card:hover::before {
+            border-color: #007bff;
+            animation: borderFlash 1s infinite;
+        }
+        @keyframes borderFlash {
+            0% { border-color: #007bff; }
+            50% { border-color: #ffea00; }
+            100% { border-color: #007bff; }
+        }
+        .product-info {
+            padding: 15px;
+            text-align: center;
+        }
+        .product-info h3 {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        .product-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        /* Pagination (if needed) */
+        .pagination {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .pagination a {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+        .pagination a.active, .pagination a:hover {
+            background: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Explore Our Cars</h1>
+</header>
+<div class="container">
+    <!-- Search and Sorting Form -->
+    <form th:action="@{/shop}" method="get">
+        <input type="text" name="search" th:value="${searchTerm}" placeholder="Search cars...">
+        <select name="sortBy">
+            <option value="">Sort By</option>
+            <option value="price" th:selected="${sortBy == 'price'}">Price</option>
+            <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+        </select>
+        <select name="sortDirection">
+            <option value="asc" th:selected="${sortDirection == 'asc'}">Ascending</option>
+            <option value="desc" th:selected="${sortDirection == 'desc'}">Descending</option>
+        </select>
+        <button type="submit">Search</button>
+        <button type="button" onclick="window.location.href='/shop'">Clear Filters</button>
+    </form>
 
-    <select name="sortBy">
-        <option value="">Sort By</option>
-        <option value="price" th:selected="${sortBy == 'price'}">Price</option>
-        <option value="name" th:selected="${sortBy == 'name'}">Name</option>
-    </select>
+    <!-- Products Grid -->
+    <div class="product-grid">
+        <div class="product-card" th:each="product : ${productPage.getContent()}">
+            <div class="image-container">
+                <img th:src="@{'/image/' + ${product.imageFileName}}" alt="Car Image">
+            </div>
+            <div class="product-info">
+                <h3 th:text="${product.name}"></h3>
+                <p th:text="${product.brand}"></p>
+                <p th:text="${product.category}"></p>
+                <p th:text="${product.price} + ' $'"></p>
+                <a th:href="@{'/products/details/' + ${product.name}}" class="btn">View Details</a>
+            </div>
+        </div>
+        <div th:if="${productPage.isEmpty()}" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
+            No cars found.
+        </div>
+    </div>
 
-    <select name="sortDirection">
-        <option value="asc" th:selected="${sortDirection == 'asc'}">Ascending</option>
-        <option value="desc" th:selected="${sortDirection == 'desc'}">Descending</option>
-    </select>
-
-    <button type="submit">Apply Sorting</button>
-
-    <button type="button" onclick="window.location.href='/shop'">Clear Filters</button>  </form>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>Image</th>
-        <th>
-            <a th:href="@{/shop(search=${searchTerm}, sortBy='name', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Name</a>
-        </th>
-        <th>
-            <a th:href="@{/shop(search=${searchTerm}, sortBy='brand', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Brand</a>
-        </th>
-        <th>
-            <a th:href="@{/shop(search=${searchTerm}, sortBy='category', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Category</a>
-        </th>
-        <th>
-            <a th:href="@{/shop(search=${searchTerm}, sortBy='price', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">Price</a>
-        </th>
-        <th>Details</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${productPage.getContent()}">  <td><img th:src="@{'/image/' + ${product.imageFileName}}" alt="Product Image" width="100"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.brand}"></td>
-        <td th:text="${product.category}"></td>
-        <td th:text="${product.price} + ' $'"></td>
-        <td><a th:href="@{'/products/details/' + ${product.name}}">View</a></td>
-    </tr>
-    <tr th:if="${productPage.isEmpty()}">
-        <td colspan="6">No products found.</td>
-    </tr>
-    </tbody>
-</table>
-<div th:if="${productPage.totalPages > 1}">
-    <div class="pagination">
+    <!-- Pagination -->
+    <div th:if="${productPage.totalPages > 1}" class="pagination">
         <a th:if="${productPage.hasPrevious()}"
            th:href="@{/shop(page=${currentPage - 1}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}">&laquo;</a>
-
         <th:block th:each="i : ${#numbers.sequence(0, productPage.totalPages - 1)}">
             <a th:href="@{/shop(page=${i}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
                th:text="${i + 1}"
                th:class="${currentPage == i ? 'active' : ''}"></a>
         </th:block>
-
         <a th:if="${productPage.hasNext()}"
            th:href="@{/shop(page=${currentPage + 1}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}">&raquo;</a>
     </div>
 </div>
+</body>
+</html>
