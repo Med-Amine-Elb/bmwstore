@@ -1,229 +1,316 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Dealership Shop</title>
-    <!-- Google Fonts for sleek typography -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #333;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        header {
-            background: url('https://via.placeholder.com/1200x400?text=Car+Dealership+Banner') no-repeat center center/cover;
-            height: 400px;
-            position: relative;
-            margin-bottom: 30px;
-        }
-        header h1 {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
-        /* Search Form */
-        form {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.9);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        form input[type="text"], form select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            flex: 1;
-            min-width: 200px;
-        }
-        form button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        form button:hover {
-            background-color: #0056b3;
-        }
-        /* Grid Layout for Products */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .product-card {
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
-        .image-container {
-            position: relative;
-            overflow: hidden;
-        }
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        .image-container:hover img {
-            transform: scale(1.1);
-        }
-        .product-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 3px solid transparent;
-            border-radius: 10px;
-            transition: border-color 0.5s ease;
-        }
-        .product-card:hover::before {
-            border-color: #007bff;
-            animation: borderFlash 1s infinite;
-        }
-        @keyframes borderFlash {
-            0% { border-color: #007bff; }
-            50% { border-color: #ffea00; }
-            100% { border-color: #007bff; }
-        }
-        .product-info {
-            padding: 15px;
-            text-align: center;
-        }
-        .product-info h3 {
-            margin: 10px 0;
-            font-size: 1.2em;
-        }
-        .product-info p {
-            margin: 5px 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #007bff;
-            color: #fff;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-        .btn:hover {
-            background: #0056b3;
-        }
-        /* Pagination (if needed) */
-        .pagination {
-            text-align: center;
-            margin-top: 30px;
-        }
-        .pagination a {
-            display: inline-block;
-            margin: 0 5px;
-            padding: 10px 15px;
-            background: rgba(255,255,255,0.9);
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: background 0.3s ease;
-        }
-        .pagination a.active, .pagination a:hover {
-            background: #007bff;
-            color: #fff;
-            border-color: #007bff;
-        }
-    </style>
+    <title>NXT - Find Your Perfect Ride</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/product-listing.css}">
 </head>
 <body>
-<header>
-    <h1>Explore Our Cars</h1>
-</header>
-<div class="container">
-    <!-- Search and Sorting Form -->
-    <form th:action="@{/shop}" method="get">
-        <input type="text" name="search" th:value="${searchTerm}" placeholder="Search cars...">
-        <select name="sortBy">
-            <option value="">Sort By</option>
-            <option value="price" th:selected="${sortBy == 'price'}">Price</option>
-            <option value="name" th:selected="${sortBy == 'name'}">Name</option>
-        </select>
-        <select name="sortDirection">
-            <option value="asc" th:selected="${sortDirection == 'asc'}">Ascending</option>
-            <option value="desc" th:selected="${sortDirection == 'desc'}">Descending</option>
-        </select>
-        <button type="submit">Search</button>
-        <button type="button" onclick="window.location.href='/shop'">Clear Filters</button>
-    </form>
-
-    <!-- Products Grid -->
-    <div class="product-grid">
-        <div class="product-card" th:each="product : ${productPage.getContent()}">
-            <div class="image-container">
-                <img th:src="@{'/image/' + ${product.imageFileName}}" alt="Car Image">
-            </div>
-            <div class="product-info">
-                <h3 th:text="${product.name}"></h3>
-                <p th:text="${product.brand}"></p>
-                <p th:text="${product.category}"></p>
-                <p th:text="${product.price} + ' $'"></p>
-                <a th:href="@{'/products/details/' + ${product.name}}" class="btn">View Details</a>
-            </div>
+<header id="main-header">
+    <div class="header-container">
+        <div class="logo">
+            <img src="/public/image/logo/nxt.jpg" alt="NXT Logo">
+            <h1>NXT</h1>
         </div>
-        <div th:if="${productPage.isEmpty()}" style="grid-column: 1 / -1; text-align: center; padding: 20px;">
-            No cars found.
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Vehicles</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <div class="search-container">
+                <input type="text" placeholder="Search vehicles...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="voice-search-btn"><i class="fas fa-microphone"></i></button>
+            </div>
+            <div class="notification">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">3</span>
+            </div>
+            <div class="user-profile">
+                <img src="/placeholder.svg?height=40&width=40" alt="User Profile">
+            </div>
+            <button class="sell-car-btn">Sell Your Car</button>
         </div>
     </div>
+</header>
 
-    <!-- Pagination -->
-    <div th:if="${productPage.totalPages > 1}" class="pagination">
-        <a th:if="${productPage.hasPrevious()}"
-           th:href="@{/shop(page=${currentPage - 1}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}">&laquo;</a>
-        <th:block th:each="i : ${#numbers.sequence(0, productPage.totalPages - 1)}">
-            <a th:href="@{/shop(page=${i}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
-               th:text="${i + 1}"
-               th:class="${currentPage == i ? 'active' : ''}"></a>
-        </th:block>
-        <a th:if="${productPage.hasNext()}"
-           th:href="@{/shop(page=${currentPage + 1}, size=${pageSize}, search=${searchTerm}, sortBy=${sortBy}, sortDirection=${sortDirection})}">&raquo;</a>
+<section class="hero">
+    <div class="hero-slider">
+        <!-- Slider images will be dynamically added here -->
+    </div>
+    <div class="hero-content">
+        <h1>Find Your Perfect Ride</h1>
+        <p>Discover a wide range of quality vehicles at unbeatable prices</p>
+        <div class="hero-buttons">
+            <button class="btn primary">Explore Vehicles</button>
+            <button class="btn secondary">Sell Your Car</button>
+        </div>
+    </div>
+</section>
+
+<section class="advanced-search">
+    <div class="container">
+        <h2>Find Your Dream Car</h2>
+        <div class="search-filters">
+            <div class="filter-group">
+                <label>Category</label>
+                <select>
+                    <option>All Categories</option>
+                    <option>Sedan</option>
+                    <option>SUV</option>
+                    <option>Coupe</option>
+                    <option>Electric</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Model Year</label>
+                <div class="range-slider">
+                    <div class="range-values">
+                        <span>2000</span>
+                        <span>2023</span>
+                    </div>
+                    <input type="range" min="2000" max="2023" value="2000" class="range-min">
+                    <input type="range" min="2000" max="2023" value="2023" class="range-max">
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Price Range</label>
+                <div class="range-slider">
+                    <div class="range-values">
+                        <span>$0</span>
+                        <span>$100,000</span>
+                    </div>
+                    <input type="range" min="0" max="100000" value="0" class="range-min">
+                    <input type="range" min="0" max="100000" value="100000" class="range-max">
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Transmission</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" checked> Automatic</label>
+                    <label><input type="checkbox"> Manual</label>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Fuel Type</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" checked> Gasoline</label>
+                    <label><input type="checkbox" checked> Diesel</label>
+                    <label><input type="checkbox" checked> Electric</label>
+                    <label><input type="checkbox" checked> Hybrid</label>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Mileage</label>
+                <input type="number" placeholder="Max mileage">
+            </div>
+            <div class="filter-group">
+                <label>Body Type</label>
+                <select>
+                    <option>All Types</option>
+                    <option>Sedan</option>
+                    <option>SUV</option>
+                    <option>Hatchback</option>
+                    <option>Coupe</option>
+                    <option>Convertible</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Color</label>
+                <select>
+                    <option>All Colors</option>
+                    <option>Black</option>
+                    <option>White</option>
+                    <option>Silver</option>
+                    <option>Red</option>
+                    <option>Blue</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-actions">
+            <button class="btn primary" id="apply-filters">Apply Filters</button>
+            <button class="btn secondary">Clear All</button>
+            <div class="filter-presets">
+                <button class="preset-btn">Family Cars</button>
+                <button class="preset-btn">Luxury</button>
+                <button class="preset-btn">Economic</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured-vehicles">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Vehicles</h2>
+            <div class="view-controls">
+                <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                <select class="sort-select">
+                    <option>Sort by: Featured</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Newest First</option>
+                </select>
+            </div>
+        </div>
+        <div class="vehicle-grid" id="vehicleGrid">
+            <!-- Vehicle cards will be dynamically inserted here -->
+        </div>
+        <div class="pagination">
+            <!-- Pagination will be dynamically inserted here -->
+        </div>
+        <div class="load-more">
+            <button class="btn primary">Load More</button>
+        </div>
+    </div>
+</section>
+
+<section class="why-choose-us">
+    <div class="container">
+        <h2>Why Choose NXT</h2>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3>Wide Selection</h3>
+                <p>Choose from thousands of quality vehicles to find your perfect match.</p>
+                <a href="#" class="feature-cta">Browse Inventory</a>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Quality Assured</h3>
+                <p>All our vehicles undergo rigorous inspection to ensure top condition.</p>
+                <a href="#" class="feature-cta">Our Standards</a>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3>Competitive Pricing</h3>
+                <p>Get the best value for your money with our transparent pricing policy.</p>
+                <a href="#" class="feature-cta">Price Promise</a>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Expert Support</h3>
+                <p>Our team of automotive experts is always ready to assist you.</p>
+                <a href="#" class="feature-cta">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <div class="container">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-slider">
+            <!-- Testimonials will be dynamically inserted here -->
+        </div>
+        <div class="testimonial-controls">
+            <button class="testimonial-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="testimonial-dots">
+                <!-- Dots will be dynamically inserted here -->
+            </div>
+            <button class="testimonial-btn next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<section class="newsletter">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter to receive the latest updates on new arrivals and special offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button type="submit" class="btn primary">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img src="/public/image/logo/nxt.jpg" alt="NXT Logo">
+                    <h3>NXT</h3>
+                </div>
+                <p>Your premier destination for quality vehicles.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Vehicles</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Sell Your Car</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Vehicle Categories</h3>
+                <ul>
+                    <li><a href="#">Sedan</a></li>
+                    <li><a href="#">SUV</a></li>
+                    <li><a href="#">Coupe</a></li>
+                    <li><a href="#">Electric</a></li>
+                    <li><a href="#">Hybrid</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Auto Drive, Car City, CC 12345</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) NXT-CARS</li>
+                    <li><i class="fas fa-envelope"></i> info@nxtcars.com</li>
+                    <li><i class="fas fa-clock"></i> Mon-Sat: 9AM - 7PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 NXT. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Vehicle detail modal -->
+<div class="vehicle-modal" id="vehicleModal">
+    <div class="modal-content">
+        <button class="close-modal"><i class="fas fa-times"></i></button>
+        <div class="modal-body">
+            <!-- Will be populated dynamically -->
+        </div>
     </div>
 </div>
+
+<script th:src="@{/js/product-listing.js}"></script>
 </body>
 </html>

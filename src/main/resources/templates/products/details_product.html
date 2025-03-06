@@ -19,20 +19,32 @@
             </a>
         </div>
         <div class="nav-links">
-            <a th:href="@{/}" class="nav-link">Home</a>
-            <a th:href="@{/products}" class="nav-link">Vehicles</a>
-            <a th:href="@{/services}" class="nav-link">Services</a>
-            <a th:href="@{/about}" class="nav-link">About</a>
-            <a th:href="@{/contact}" class="nav-link">Contact</a>
+            <a th:href="@{/}" class="nav-link">HOME</a>
+            <a th:href="@{/}" class="nav-link">SERVICE</a>
+            <a th:href="@{/}" class="nav-link">NEWEST CARS</a>
+            <a th:href="@{/}" class="nav-link">FEATURED CARS</a>
+            <a th:href="@{/}" class="nav-link">BRANDS</a>
+            <a th:href="@{/}" class="nav-link">CONTACT</a>
         </div>
         <div class="nav-actions">
             <a th:href="@{/cart}" class="icon-btn cart-btn">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" th:text="${cartCount ?: 0}">0</span>
             </a>
-            <a th:href="@{/account}" class="icon-btn user-btn">
-                <i class="fas fa-user"></i>
-            </a>
+            <div class="user-dropdown">
+                <a class="icon-btn user-btn" id="userDropdownToggle">
+                    <i class="fas fa-user"></i>
+                    <span class="user-name" th:text="${user != null ? user.firstName : 'Account'}">Account</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a th:href="@{/account/settings}" class="dropdown-item">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <a th:href="@{/logout}" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -403,10 +415,6 @@
                         <p class="review-text">The driving experience is unmatched. The power delivery is smooth yet explosive when needed. Interior quality is top-notch, and the technology features are intuitive. Couldn't be happier with my purchase!</p>
                     </div>
                     <div class="review-footer">
-                        <div class="review-images">
-                            <img src="/images/reviews/review1-img1.jpg" alt="Review Image 1">
-                            <img src="/images/reviews/review1-img2.jpg" alt="Review Image 2">
-                        </div>
                         <div class="review-helpful">
                             <span>Was this review helpful?</span>
                             <button class="helpful-btn">

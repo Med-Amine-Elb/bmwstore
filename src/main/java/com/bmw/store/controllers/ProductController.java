@@ -211,8 +211,11 @@
             System.out.println("Featured Products size: " + featuredProducts.size());
             model.addAttribute("featuredProducts", featuredProducts);
 
+
+
             return "products/details_product";
         }
+
 
 
 
@@ -260,5 +263,19 @@
             return "products/shop";
         }
 
+        @ModelAttribute("user")
+        public User getCurrentUser(Principal principal) {
+            if (principal != null) {
+                String email = principal.getName();
+                return userRepository.findByemail(email).orElse(null);
+            }
+            return null;
+        }
 
+        @ModelAttribute("cartCount")
+        public Integer getCartCount(Principal principal) {
+            // You can implement cart count logic here
+            // For now, returning 0 as placeholder
+            return 0;
+        }
     }

@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <!--font-family-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
@@ -76,7 +78,7 @@
                     <!-- End Header Navigation -->
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu" >
+                    <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
                             <li class="scroll active"><a href="#home">Home</a></li>
                             <li class="scroll"><a href="#service">service</a></li>
@@ -84,15 +86,33 @@
                             <li class="scroll"><a href="#ban">FEATURED CARS</a></li>
                             <li class="scroll"><a href="#brand">brands</a></li>
                             <li class="scroll"><a href="#contact">Contact</a></li>
-                            <!-- Login and Register Links -->
-                            <li sec:authorize="isAuthenticated()" class="dropdown">  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span th:text="${firstName}"></span>  <span th:text="${lastName}"></span>   <span class="caret"></span>  </a>
-                                <ul class="dropdown-menu">
-                                    <li><a th:href="@{/logout}" class="logout-link">Logout</a></li>  </ul>
+
+                            <!-- Cart Icon -->
+                            <li class="nav-item">
+                                <a th:href="@{/cart}" class="icon-btn cart-btn">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span class="cart-count" th:text="${cartCount ?: 0}">0</span>
+                                </a>
                             </li>
 
-                            <li sec:authorize="!isAuthenticated()">
-                                <a th:href="@{/login}">Login</a>
+                            <!-- User Dropdown with Icon - For Authenticated Users -->
+                            <li sec:authorize="isAuthenticated()" class="nav-item dropdown user-dropdown">
+                                <a href="#" class="icon-btn user-btn dropdown-toggle" id="userDropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-user"></i>
+                                    <span class="user-name" th:text="${user != null ? user.firstName : 'Account'}"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                    <li>
+                                        <div class="dropdown-header">
+                                            <li><a th:href="@{/account/settings}" class="dropdown-item">
+                                                <i class="fas fa-cog"></i> Settings</a>
+                                            </li>
+                                            <li><a th:href="@{/logout}" class="dropdown-item">
+                                                <i class="fas fa-sign-out-alt"></i> Logout</a>
+                                            </li>
+                                        </div>
+                                    </li>
+                                </ul>
                             </li>
                         </ul><!--/.nav -->
                     </div><!-- /.navbar-collapse -->

@@ -885,5 +885,69 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
         padding: 10px 15px; /* Adjust padding */
     }
 }
+.user-btn {
+    display: flex;
+    align-items: center;
+}
 
+.user-name {
+    margin-left: 6px;
+}
+
+.dropdown-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-header i {
+    margin-right: 10px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Cart icon styles */
+.cart-btn {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff5722;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icons styling */
+.icon-btn {
+    padding: 10px;
+    display: inline-block;
+}
 /*========================Thank you=================

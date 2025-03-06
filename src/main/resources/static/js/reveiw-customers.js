@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "Absolutely Stunning Performance",
             date: "June 15, 2023",
             content: "The driving experience is unmatched. The power delivery is smooth yet explosive when needed. Interior quality is top-notch, and the technology features are intuitive. Couldn't be happier with my purchase!",
-            images: ["/images/reviews/review1-img1.jpg", "/images/reviews/review1-img2.jpg"],
+            images: [],
             helpfulCount: 12,
             notHelpfulCount: 2,
             verified: true
